@@ -416,18 +416,18 @@ function InterpreterApp() {
   }
 
   // Learning Screen
-  if (currentScreen === 'learning') {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-zinc-800 flex flex-col">
-      <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700">
+if (currentScreen === 'learning') {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-zinc-800 flex flex-col">
+      <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700 flex-shrink-0"> {/* flex-shrink-0 추가 */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-3 min-w-0"> {/* min-w-0 추가 */}
-              <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis"> {/* whitespace-nowrap, overflow-hidden, text-ellipsis 추가 */}
+            <div className="flex items-center gap-3 min-w-0">
+              <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis">
                 {currentScript.topic}
               </h1>
-              <div className="flex items-center gap-2 flex-shrink-0"> {/* flex-shrink-0 추가 */}
-                <span className="px-2 py-1 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full whitespace-nowrap"> {/* whitespace-nowrap 추가 */}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <span className="px-2 py-1 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full whitespace-nowrap">
                   {isVoiceMode ? '음성모드' : '텍스트모드'}
                 </span>
                 <button
@@ -439,8 +439,8 @@ function InterpreterApp() {
                 </button>
               </div>
             </div>
-            <div className="flex items-center gap-4 flex-shrink-0"> {/* flex-shrink-0 추가 */}
-              <span className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap"> {/* whitespace-nowrap 추가 */}
+            <div className="flex items-center gap-4 flex-shrink-0">
+              <span className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
                 {currentIndex + 1} / {currentScript.script.length}
               </span>
               <button
@@ -463,76 +463,76 @@ function InterpreterApp() {
         </div>
       </header>
 
-        <div className="flex-1 w-full px-4 py-6 flex flex-col gap-4 overflow-y-auto">
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-medium text-gray-600 dark:text-gray-400">통역할 문장</h2>
-              {isVoiceMode && (
-                <button
-                  onClick={() => playTTS(getQuestionText(), speakerLanguages[currentSentence.speaker])}
-                  disabled={isPlaying}
-                  className="flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 disabled:opacity-50"
-                >
-                  {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-                </button>
-              )}
-            </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 overflow-y-auto">
-              <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-semibold ${
-                getSpeakerColor(currentSentence.speaker)
-              }`}>
-                {currentSentence.speaker}
-              </div>
-              <div className="text-lg font-medium text-gray-800 dark:text-gray-100 break-words overflow-y-auto w-full">
-                {(!isVoiceMode || showTextInVoice) ? getQuestionText() : '🔊 음성을 들어보세요'}
-              </div>
-            </div>
+      <div className="flex-1 w-full px-4 py-6 flex flex-col gap-4 overflow-y-auto">
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col"> {/* flex-1 추가 */}
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-medium text-gray-600 dark:text-gray-400">통역할 문장</h2>
+            {isVoiceMode && (
+              <button
+                onClick={() => playTTS(getQuestionText(), speakerLanguages[currentSentence.speaker])}
+                disabled={isPlaying}
+                className="flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 disabled:opacity-50"
+              >
+                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+              </button>
+            )}
           </div>
-
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col overflow-hidden">
-            <h2 className="text-base font-medium text-gray-600 dark:text-gray-400 mb-4">모범 답안</h2>
-            <div className="text-lg font-medium text-gray-800 dark:text-gray-100 overflow-y-auto w-full">
-              {showAnswer ? (
-                getAnswerText()
-              ) : (
-                <span className="text-gray-500 dark:text-gray-400">모범 답안을 확인해보세요</span>
-              )}
+          <div className="flex flex-col sm:flex-row items-start sm:items-start gap-4 flex-1 overflow-y-auto"> {/* flex-1 추가 */}
+            <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-semibold ${
+              getSpeakerColor(currentSentence.speaker)
+            }`}>
+              {currentSentence.speaker}
+            </div>
+            <div className="text-lg font-medium text-gray-800 dark:text-gray-100 break-words flex-1"> {/* flex-1 추가 */}
+              {(!isVoiceMode || showTextInVoice) ? getQuestionText() : '🔊 음성을 들어보세요'}
             </div>
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t dark:border-zinc-700 shadow-lg z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <button
-                onClick={prevSentence}
-                disabled={currentIndex === 0}
-                className="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ArrowLeft size={20} className="mr-1" />
-                이전
-              </button>
-
-              <button
-                onClick={() => setShowAnswer(!showAnswer)}
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
-              >
-                {showAnswer ? '답안 숨기기' : '모범 답안 확인'}
-              </button>
-
-              <button
-                onClick={nextSentence}
-                className="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg"
-              >
-                다음
-                <ArrowRight size={20} className="ml-1" />
-              </button>
-            </div>
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col"> {/* flex-1 추가 */}
+          <h2 className="text-base font-medium text-gray-600 dark:text-gray-400 mb-4">모범 답안</h2>
+          <div className="text-lg font-medium text-gray-800 dark:text-gray-100 flex-1 overflow-y-auto"> {/* flex-1 추가 */}
+            {showAnswer ? (
+              getAnswerText()
+            ) : (
+              <span className="text-gray-500 dark:text-gray-400">모범 답안을 확인해보세요</span>
+            )}
           </div>
         </div>
       </div>
-    );
-  }
+
+      <div className="bg-white dark:bg-zinc-900 border-t dark:border-zinc-700 shadow-lg flex-shrink-0"> {/* flex-shrink-0 추가 */}
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={prevSentence}
+              disabled={currentIndex === 0}
+              className="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ArrowLeft size={20} className="mr-1" />
+              이전
+            </button>
+
+            <button
+              onClick={() => setShowAnswer(!showAnswer)}
+              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+            >
+              {showAnswer ? '답안 숨기기' : '모범 답안 확인'}
+            </button>
+
+            <button
+              onClick={nextSentence}
+              className="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg"
+            >
+              다음
+              <ArrowRight size={20} className="ml-1" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
   // Complete Screen
   if (currentScreen === 'complete') {
