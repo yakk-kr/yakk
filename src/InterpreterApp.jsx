@@ -419,7 +419,7 @@ function InterpreterApp() {
 if (currentScreen === 'learning') {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-800 flex flex-col">
-      <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700 flex-shrink-0"> {/* flex-shrink-0 추가 */}
+      <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700 flex-shrink-0">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3 min-w-0">
@@ -463,9 +463,10 @@ if (currentScreen === 'learning') {
         </div>
       </header>
 
-      <div className="flex-1 w-full px-4 py-6 flex flex-col gap-4 overflow-y-auto">
-        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col"> {/* flex-1 추가 */}
-          <div className="flex items-center justify-between mb-4">
+      <div className="flex-1 w-full px-4 py-6 flex flex-col gap-4">
+        {/* 통역할 문장 영역 */}
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex flex-col min-h-0 flex-1">
+          <div className="flex items-center justify-between mb-4 flex-shrink-0">
             <h2 className="text-base font-medium text-gray-600 dark:text-gray-400">통역할 문장</h2>
             {isVoiceMode && (
               <button
@@ -477,21 +478,24 @@ if (currentScreen === 'learning') {
               </button>
             )}
           </div>
-          <div className="flex flex-col sm:flex-row items-start sm:items-start gap-4 flex-1 overflow-y-auto"> {/* flex-1 추가 */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-start gap-4 flex-1 overflow-y-auto">
             <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-semibold ${
               getSpeakerColor(currentSentence.speaker)
             }`}>
               {currentSentence.speaker}
             </div>
-            <div className="text-lg font-medium text-gray-800 dark:text-gray-100 break-words flex-1"> {/* flex-1 추가 */}
+            <div className="text-lg font-medium text-gray-800 dark:text-gray-100 break-words flex-1">
               {(!isVoiceMode || showTextInVoice) ? getQuestionText() : '🔊 음성을 들어보세요'}
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col"> {/* flex-1 추가 */}
-          <h2 className="text-base font-medium text-gray-600 dark:text-gray-400 mb-4">모범 답안</h2>
-          <div className="text-lg font-medium text-gray-800 dark:text-gray-100 flex-1 overflow-y-auto"> {/* flex-1 추가 */}
+        {/* 모범 답안 영역 */}
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex flex-col min-h-0 flex-1">
+          <h2 className="text-base font-medium text-gray-600 dark:text-gray-400 mb-4 flex-shrink-0">
+            모범 답안
+          </h2>
+          <div className="text-lg font-medium text-gray-800 dark:text-gray-100 flex-1 overflow-y-auto">
             {showAnswer ? (
               getAnswerText()
             ) : (
@@ -501,7 +505,7 @@ if (currentScreen === 'learning') {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 border-t dark:border-zinc-700 shadow-lg flex-shrink-0"> {/* flex-shrink-0 추가 */}
+      <div className="bg-white dark:bg-zinc-900 border-t dark:border-zinc-700 shadow-lg flex-shrink-0">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <button
