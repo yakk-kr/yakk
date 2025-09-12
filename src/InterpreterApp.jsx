@@ -1,115 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Upload, HelpCircle, Play, Pause, Volume2, VolumeX, ArrowLeft, ArrowRight, RefreshCcw, Home, ChevronDown, Copy, Check, X } from 'lucide-react';
+// src/App.jsx
+import React, { useState } from 'react';
+import { Upload, HelpCircle, Play, Pause, Volume2, ArrowLeft, ArrowRight, RefreshCcw, Home, ChevronDown, Copy, Check, X } from 'lucide-react';
+import { dummyScripts, promptTemplate } from './data.js';
 
-// 더미 데이터
-const dummyScripts = [
-  {
-    id: 1,
-    topic: "공항 체크인",
-    level: "초급",
-    script: [
-      { speaker: "A", jp: "すみません、チェックインをお願いします。", kr: "죄송합니다, 체크인을 부탁드립니다." },
-      { speaker: "B", jp: "パスポートと航空券を見せてください。", kr: "여권과 항공권을 보여주세요." },
-      { speaker: "A", jp: "はい、こちらです。", kr: "네, 여기 있습니다." }
-    ]
-  },
-  {
-    id: 2,
-    topic: "호텔 예약",
-    level: "초급",
-    script: [
-      { speaker: "A", jp: "予約を確認したいのですが。", kr: "예약을 확인하고 싶습니다." },
-      { speaker: "B", jp: "お名前をお聞かせください。", kr: "성함을 알려주세요." }
-    ]
-  },
-  {
-    id: 3,
-    topic: "비즈니스 미팅",
-    level: "중급",
-    script: [
-      { speaker: "A", jp: "会議の件でお時間をいただけますか？", kr: "회의 건으로 시간을 내주실 수 있나요?" },
-      { speaker: "B", jp: "もちろんです。いつが都合よろしいですか？", kr: "물론입니다. 언제가 편하신가요?" }
-    ]
-  },
-  {
-    id: 4,
-    topic: "의료 상담",
-    level: "고급",
-    script: [
-      { speaker: "A", jp: "胃の痛みが続いています。", kr: "위가 계속 아픕니다." },
-      { speaker: "B", jp: "いつからその症状がありますか？", kr: "언제부터 그 증상이 있었나요?" }
-    ]
-  },
-  {
-    id: 5,
-    topic: "쇼핑",
-    level: "초급",
-    script: [
-      { speaker: "A", jp: "この服のサイズはありますか？", kr: "이 옷의 사이즈가 있나요?" },
-      { speaker: "B", jp: "少々お待ちください。確認いたします。", kr: "잠시만 기다려주세요. 확인해드리겠습니다." }
-    ]
-  },
-  {
-    id: 6,
-    topic: "기술 협상",
-    level: "고급",
-    script: [
-      { speaker: "A", jp: "技術移転の条件について話し合いましょう。", kr: "기술 이전 조건에 대해 논의해봅시다." },
-      { speaker: "B", jp: "ライセンス料はどのくらいを想定していますか？", kr: "라이센스 비용은 얼마 정도를 생각하고 계신가요?" }
-    ]
-  },
-  {
-    id: 7,
-    topic: "레스토랑 주문",
-    level: "중급",
-    script: [
-      { speaker: "A", jp: "おすすめの料理は何ですか？", kr: "추천 요리는 무엇인가요?" },
-      { speaker: "B", jp: "今日の特別メニューはサーモンです。", kr: "오늘의 특별 메뉴는 연어입니다." }
-    ]
-  },
-  {
-    id: 8,
-    topic: "부동산 상담",
-    level: "고급",
-    script: [
-      { speaker: "A", jp: "この物件の詳細を教えてください。", kr: "이 부동산의 상세 정보를 알려주세요." },
-      { speaker: "B", jp: "築年数は15年で、リフォーム済みです。", kr: "건축 연수는 15년이고, 리모델링이 완료되었습니다." }
-    ]
-  },
-  {
-    id: 9,
-    topic: "화장품 박람회",
-    level: "중급",
-    script: [
-      { speaker: "A", jp: "こんにちは。韓国市場について伺いたいです。", kr: "안녕하세요. 한국 시장에 대해 여쭤보고 싶습니다." },
-      { speaker: "B", jp: "ありがとうございます。韓国ではどの成分が人気ですか？", kr: "감사합니다. 한국에서는 어떤 성분이 인기가 있나요?" }
-    ]
-  }
-];
-
-const promptTemplate = `일본어-한국어 통역 연습을 위한 JSON 스크립트를 생성해주세요.
-
-아래 형식에 맞춰 작성해주세요:
-
-{
-  "topic": "대화 상황 또는 주제",
-  "script": [
-    { "speaker": "A", "jp": "일본어 문장", "kr": "한국어 문장" },
-    { "speaker": "B", "jp": "일본어 문장", "kr": "한국어 문장" }
-  ]
-}
-
-요구사항:
-- topic: 구체적인 상황이나 주제 (예: 공항 체크인, 호텔 예약, 비즈니스 미팅 등)
-- script: 대화 배열 (최소 5개 이상의 주고받는 대화)
-- speaker: "A" 또는 "B" (두 명의 화자)
-- jp: 자연스러운 일본어 문장
-- kr: 해당하는 한국어 번역
-
-주제: [여기에 원하는 상황이나 주제를 입력하세요]`;
+// 화자별 색상을 반환하는 함수
+const getSpeakerColor = (speaker) => {
+  const speakerColors = [
+    'bg-orange-400 bg-opacity-80',   // A
+    'bg-green-400 bg-opacity-80',    // B
+    'bg-blue-400 bg-opacity-80',     // C
+    'bg-purple-400 bg-opacity-80',   // D
+    'bg-pink-400 bg-opacity-80'      // E
+  ];
+  
+  // 간단한 해시 함수를 사용하여 화자에 색상 할당
+  const charCode = speaker.charCodeAt(0);
+  const colorIndex = (charCode - 65) % speakerColors.length;
+  
+  return speakerColors[colorIndex];
+};
 
 function InterpreterApp() {
-  const [currentScreen, setCurrentScreen] = useState('home'); // home, setup, learning, complete
+  const [currentScreen, setCurrentScreen] = useState('home');
   const [uploadedScript, setUploadedScript] = useState(null);
   const [selectedTab, setSelectedTab] = useState('전체');
   const [showHelp, setShowHelp] = useState(false);
@@ -131,30 +43,6 @@ function InterpreterApp() {
   const currentScript = uploadedScript || dummyScripts[0];
   const currentSentence = currentScript?.script[currentIndex];
   const progress = currentScript ? ((currentIndex + 1) / currentScript.script.length) * 100 : 0;
-
-  // 화자 색상 배열 (5가지 색상)
-  const speakerColors = [
-    'bg-orange-400 bg-opacity-80',   // 주황
-    'bg-green-400 bg-opacity-80',    // 초록
-    'bg-blue-400 bg-opacity-80',     // 파랑
-    'bg-purple-400 bg-opacity-80',   // 보라
-    'bg-pink-400 bg-opacity-80'      // 분홍
-  ];
-
-  // 화자 이름에 따른 직접 색상 매핑 함수
-  const getSimpleSpeakerColor = (speaker) => {
-    switch (speaker) {
-      case 'A': return speakerColors[0]; // 주황
-      case 'B': return speakerColors[1]; // 초록  
-      case 'C': return speakerColors[2]; // 파랑
-      case 'D': return speakerColors[3]; // 보라
-      case 'E': return speakerColors[4]; // 분홍
-      default: 
-        // 알파벳 순서로 색상 할당 (A=65, B=66, C=67...)
-        const charCode = speaker.charCodeAt(0) - 65; // A=0, B=1, C=2...
-        return speakerColors[charCode % speakerColors.length];
-    }
-  };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -244,10 +132,11 @@ function InterpreterApp() {
   };
 
   const toggleSpeakerLanguage = () => {
-    setSpeakerLanguages({
-      A: speakerLanguages.A === 'jp' ? 'kr' : 'jp',
-      B: speakerLanguages.B === 'jp' ? 'kr' : 'jp'
-    });
+    const newSpeakerLanguages = { ...speakerLanguages };
+    for (const speaker in newSpeakerLanguages) {
+      newSpeakerLanguages[speaker] = newSpeakerLanguages[speaker] === 'jp' ? 'kr' : 'jp';
+    }
+    setSpeakerLanguages(newSpeakerLanguages);
   };
 
   const playTTS = (text, lang) => {
@@ -279,14 +168,14 @@ function InterpreterApp() {
     const answerLang = speakerLanguages[currentSentence.speaker] === 'jp' ? 'kr' : 'jp';
     return currentSentence[answerLang];
   };
-
+  
   // Home Screen
   if (currentScreen === 'home') {
     return (
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <header className="bg-white shadow-sm border-b">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="w-full px-4 py-4 flex justify-between items-center">
             <h1 className="text-xl md:text-2xl font-bold text-gray-800">일본어 통역 연습</h1>
             <button 
               onClick={() => setShowHelp(true)}
@@ -297,27 +186,27 @@ function InterpreterApp() {
           </div>
         </header>
 
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="w-full px-4 py-8">
           {/* Upload Section */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <h2 className="text-lg font-semibold mb-4">JSON 스크립트 업로드</h2>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
+            <input
+              type="file"
+              accept=".json"
+              onChange={handleFileUpload}
+              className="hidden"
+              id="file-upload"
+            />
+            <label
+              htmlFor="file-upload"
+              className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors block cursor-pointer"
+            >
               <Upload size={48} className="mx-auto text-gray-400 mb-4" />
               <p className="text-gray-600 mb-4">JSON 파일을 드래그하거나 클릭하여 업로드하세요</p>
-              <input
-                type="file"
-                accept=".json"
-                onChange={handleFileUpload}
-                className="hidden"
-                id="file-upload"
-              />
-              <label 
-                htmlFor="file-upload" 
-                className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 cursor-pointer inline-block"
-              >
+              <span className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 cursor-pointer inline-block">
                 파일 선택
-              </label>
-            </div>
+              </span>
+            </label>
           </div>
 
           {/* Example Scripts */}
@@ -415,7 +304,7 @@ function InterpreterApp() {
     return (
       <div className="min-h-screen bg-gray-50">
         <header className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b z-40">
-          <div className="max-w-4xl mx-auto px-4 py-4 flex items-center">
+          <div className="w-full px-4 py-4 flex items-center">
             <button 
               onClick={() => setCurrentScreen('home')}
               className="mr-4 p-2 hover:bg-gray-100 rounded-full"
@@ -426,7 +315,7 @@ function InterpreterApp() {
           </div>
         </header>
 
-        <div className="max-w-4xl mx-auto px-4 pt-24 pb-8 h-screen">
+        <div className="w-full px-4 pt-24 pb-8 h-screen">
           <div className="bg-white rounded-lg shadow-sm h-full overflow-hidden relative">
             {/* 스크롤 가능한 설정 컨텐츠 */}
             <div className="h-full overflow-y-auto p-6 pb-32">
@@ -485,12 +374,12 @@ function InterpreterApp() {
               <div className="mb-8">
                 <h3 className="text-base font-medium mb-4">화자별 언어 설정</h3>
                 <div className="space-y-4">
-                  {speakers.map((speaker, index) => (
+                  {speakers.map((speaker) => (
                     <div key={speaker} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex items-center">
                         <div 
                           className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold mr-4 ${
-                            index === 0 ? 'bg-orange-400 bg-opacity-80' : 'bg-green-400 bg-opacity-80'
+                            getSpeakerColor(speaker)
                           }`}
                         >
                           {speaker}
@@ -513,8 +402,7 @@ function InterpreterApp() {
                       </div>
                     </div>
                   ))}
-                  {speakers.length === 2 && (
-                    <div className="flex justify-center">
+                  <div className="flex justify-center">
                       <button
                         onClick={toggleSpeakerLanguage}
                         className="flex items-center px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg"
@@ -523,7 +411,6 @@ function InterpreterApp() {
                         언어 교체
                       </button>
                     </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -548,7 +435,7 @@ function InterpreterApp() {
     return (
       <div className="min-h-screen bg-gray-50 pb-24">
         <header className="bg-white shadow-sm border-b">
-          <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="w-full px-4 py-4">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-3">
                 <h1 className="text-lg font-bold text-gray-800">{currentScript.topic}</h1>
@@ -589,7 +476,7 @@ function InterpreterApp() {
           </div>
         </header>
 
-        <div className="max-w-4xl mx-auto px-4 py-6 h-[calc(100vh-140px)]">
+        <div className="w-full px-4 py-6 h-[calc(100vh-140px)]">
           <div className="h-full flex flex-col">
             {/* Question Section - 정확히 50% */}
             <div className="h-1/2 bg-white rounded-lg shadow-sm p-6 mb-2 flex flex-col">
@@ -607,11 +494,11 @@ function InterpreterApp() {
               </div>
               <div className="flex items-center mb-4">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold mr-4 ${
-                  getSimpleSpeakerColor(currentSentence.speaker)
+                  getSpeakerColor(currentSentence.speaker)
                 }`}>
                   {currentSentence.speaker}
                 </div>
-                <div className="text-lg text-gray-800 flex-1">
+                <div className="text-2xl font-bold flex-1 flex items-start">
                   {(!isVoiceMode || showTextInVoice) ? getQuestionText() : '🔊 음성을 들어보세요'}
                 </div>
               </div>
@@ -620,8 +507,12 @@ function InterpreterApp() {
             {/* Answer Section - 정확히 50% */}
             <div className="h-1/2 bg-white rounded-lg shadow-sm p-6 flex flex-col">
               <h2 className="text-base font-medium text-gray-600 mb-4">모범 답안</h2>
-              <div className="text-lg text-gray-800 flex-1 flex items-center">
-                {showAnswer ? getAnswerText() : '모범 답안을 확인해보세요'}
+              <div className="text-2xl font-bold flex-1 flex items-start">
+                {showAnswer ? (
+                  <span className="text-black">{getAnswerText()}</span>
+                ) : (
+                  <span className="text-gray-500">모범 답안을 확인해보세요</span>
+                )}
               </div>
             </div>
           </div>
@@ -629,7 +520,7 @@ function InterpreterApp() {
 
         {/* Fixed Bottom Controls */}
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg">
-          <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="w-full px-4 py-4">
             <div className="flex items-center justify-between">
               <button
                 onClick={prevSentence}
@@ -665,7 +556,7 @@ function InterpreterApp() {
   if (currentScreen === 'complete') {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full mx-4 text-center">
+        <div className="bg-white rounded-lg shadow-lg p-8 text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Check size={32} className="text-green-600" />
           </div>
