@@ -419,47 +419,49 @@ function InterpreterApp() {
   if (currentScreen === 'learning') {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-zinc-800 flex flex-col">
-        <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-3">
-                <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100">{currentScript.topic}</h1>
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
-                    {isVoiceMode ? '음성모드' : '텍스트모드'}
-                  </span>
-                  <button 
-                    onClick={() => setCurrentScreen('setup')}
-                    className="p-1 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full"
-                    title="설정 편집"
-                  >
-                    <RefreshCcw size={14} className="text-gray-600 dark:text-gray-400" />
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {currentIndex + 1} / {currentScript.script.length}
+      <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3 min-w-0"> {/* min-w-0 추가 */}
+              <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis"> {/* whitespace-nowrap, overflow-hidden, text-ellipsis 추가 */}
+                {currentScript.topic}
+              </h1>
+              <div className="flex items-center gap-2 flex-shrink-0"> {/* flex-shrink-0 추가 */}
+                <span className="px-2 py-1 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full whitespace-nowrap"> {/* whitespace-nowrap 추가 */}
+                  {isVoiceMode ? '음성모드' : '텍스트모드'}
                 </span>
-                <button 
-                  onClick={() => {
-                    setCurrentScreen('home');
-                    setUploadedScript(null);
-                  }}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full"
+                <button
+                  onClick={() => setCurrentScreen('setup')}
+                  className="p-1 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full"
+                  title="설정 편집"
                 >
-                  <X size={20} className="text-gray-600 dark:text-gray-400" />
+                  <RefreshCcw size={14} className="text-gray-600 dark:text-gray-400" />
                 </button>
               </div>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
-              <div 
-                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              />
+            <div className="flex items-center gap-4 flex-shrink-0"> {/* flex-shrink-0 추가 */}
+              <span className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap"> {/* whitespace-nowrap 추가 */}
+                {currentIndex + 1} / {currentScript.script.length}
+              </span>
+              <button
+                onClick={() => {
+                  setCurrentScreen('home');
+                  setUploadedScript(null);
+                }}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full"
+              >
+                <X size={20} className="text-gray-600 dark:text-gray-400" />
+              </button>
             </div>
           </div>
-        </header>
+          <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
+            <div
+              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      </header>
 
         <div className="flex-1 w-full px-4 py-6 flex flex-col gap-4 overflow-y-auto">
           <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 flex-1 flex flex-col overflow-hidden">
