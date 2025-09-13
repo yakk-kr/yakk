@@ -17,19 +17,20 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
       <div className="absolute top-0 left-0 w-full h-[405px] opacity-30 bg-gradient-to-b from-[#C1FF87] to-transparent pointer-events-none" />
 
       {/* 헤더 */}
-      <div className="sticky top-0 z-10 w-full h-[52px] bg-white flex items-center justify-between px-2 border-b border-black/5">
-        <button
-          onClick={() => setCurrentScreen('home')}
-          className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-black/5"
-        >
-          <ChevronLeft size={16} className="text-black/40" />
-        </button>
-        <h1 className="text-[16px] font-bold text-black">도움말</h1>
-        <div className="w-8 h-8" /> {/* placeholder for spacing */}
+      <div className="fixed top-0 z-10 w-full h-[52px] bg-white flex items-center px-2 border-b border-black/5">
+        <div className="flex items-center">
+          <button
+            onClick={() => setCurrentScreen('home')}
+            className="p-2 rounded-lg bg-transparent hover:bg-black/5 mr-2"
+          >
+            <ChevronLeft size={22} className="text-gray-600" />
+          </button>
+          <h1 className="text-[16px] font-bold text-black">도움말</h1>
+        </div>
       </div>
 
       {/* 본문 */}
-      <div className="relative px-8 pt-12 pb-32 flex flex-col gap-16">
+      <div className="relative px-8 pt-24 pb-32 flex flex-col gap-16 max-w-[480px] mx-auto">
         {/* Step 1 */}
         <div className="flex flex-col gap-5">
           <div className="flex gap-3 items-start">
@@ -41,8 +42,9 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
                 JSON 파일이 뭔가요?
               </h2>
               <p className="mt-3 text-[14px] font-semibold text-black/70 leading-[23px]">
-                JSON(JavaScript Object Notation)은 사람이 읽기 쉬운 텍스트 기반의
-                데이터 교환 형식으로, 데이터를 저장하고 전송하는 데 사용됩니다.
+                JSON(JavaScript Object Notation)은 사람이 읽기 쉬운 텍스트
+                기반의 데이터 교환 형식으로, 데이터를 저장하고 전송하는 데
+                사용됩니다.
               </p>
             </div>
           </div>
@@ -62,8 +64,8 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
                 스크립트를 만들죠?
               </h2>
               <p className="mt-3 text-[14px] font-semibold text-black/70 leading-[23px]">
-                아래 작성된 예시 프롬프트를 ChatGPT, Gemini와 같은 AI에 붙여넣기만 하면
-                만들 수 있어요!
+                아래 작성된 예시 프롬프트를 ChatGPT, Gemini와 같은 AI에
+                붙여넣기만 하면 만들 수 있어요!
               </p>
             </div>
           </div>
@@ -73,12 +75,14 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
         {/* 프롬프트 박스 */}
         <div className="bg-black/5 rounded-2xl border border-black/5 overflow-hidden">
           <div className="flex items-center justify-between px-4 py-2 border-b border-black/5">
-            <span className="text-[14px] font-semibold text-black/70">프롬프트</span>
+            <span className="text-[14px] font-semibold text-black/70">
+              프롬프트
+            </span>
             <button
               onClick={copyPrompt}
-              className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-black/5"
+              className="p-2 rounded-lg bg-transparent hover:bg-black/5"
             >
-              <Copy size={16} className="text-black/40" />
+              <Copy size={16} className="text-gray-600" />
             </button>
           </div>
           <div className="bg-white p-4 h-[312px] overflow-y-auto">
@@ -90,19 +94,22 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
       </div>
 
       {/* 하단 버튼 */}
-      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-b from-transparent to-[#F8F8F8] px-8 pb-6 flex flex-col gap-3">
-        <button
-          onClick={copyPrompt}
-          className="h-[52px] rounded-2xl bg-[#B7FF74] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
-        >
-          <Upload size={16} className="text-black" />
-          프롬프트 복사하기
-        </button>
+      <div className="fixed bottom-0 left-0 right-0 z-20">
+        <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
+        <div className="bg-[#F8F8F8] px-8 pb-6 flex flex-col gap-3 max-w-[480px] mx-auto">
+          <button
+            onClick={copyPrompt}
+            className="h-[52px] rounded-2xl bg-[#B7FF74] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
+          >
+            <Upload size={16} className="text-black" />
+            프롬프트 복사하기
+          </button>
+        </div>
       </div>
 
       {/* 토스트 */}
       {copied && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[14px] font-semibold px-5 py-3 rounded-2xl flex items-center gap-3 backdrop-blur-md">
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[14px] font-semibold px-5 py-3 rounded-2xl flex items-center gap-3 backdrop-blur-md">
           <Check size={16} className="text-[#7BFF00]" />
           복사가 완료되었어요!
         </div>

@@ -1,17 +1,10 @@
 import React from 'react';
-import {
-  ArrowLeft,
-  ArrowRight,
-  Pause,
-  Play,
-  RefreshCcw,
-  X,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
+import LearningHeader from '../components/LearningHeader';
 
 function LearningScreen({
   currentScript,
   currentSentence,
-  progress,
   currentIndex,
   setCurrentIndex,
   showAnswer,
@@ -59,100 +52,80 @@ function LearningScreen({
   return (
     <div className="min-h-screen bg-[#F1F8EB] flex flex-col">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b z-40">
-        <div className="px-5 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3 min-w-0">
-              <h1 className="text-base font-bold text-gray-900 truncate">
-                {currentScript.topic}
-              </h1>
-              <span className="px-2 py-1 bg-[#B7FF74]/50 text-[#59B800] text-xs font-bold rounded-md">
-                {isVoiceMode ? '음성 모드' : '텍스트 모드'}
-              </span>
-              <button
-                onClick={() => setCurrentScreen('setup')}
-                className="p-1 hover:bg-gray-100 rounded-md"
-              >
-                <RefreshCcw size={16} className="text-gray-500" />
-              </button>
-            </div>
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <span className="text-sm text-gray-500 whitespace-nowrap">
-                {currentIndex + 1}/{currentScript.script.length}
-              </span>
-              <button
-                onClick={() => {
-                  setCurrentScreen('home');
-                  setUploadedScript(null);
-                }}
-                className="p-2 hover:bg-gray-100 rounded-md"
-              >
-                <X size={18} className="text-gray-500" />
-              </button>
-            </div>
-          </div>
-          <div className="w-full bg-gray-200 h-1.5 rounded-full">
-            <div
-              className="bg-[#B7FF74] h-1.5 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-      </header>
+      <LearningHeader
+        currentScript={currentScript}
+        currentIndex={currentIndex}
+        setCurrentScreen={setCurrentScreen}
+        setUploadedScript={setUploadedScript}
+        isVoiceMode={isVoiceMode}
+      />
 
       {/* Content */}
-      <div className="flex-1 w-full px-4 pt-28 pb-28 flex flex-col gap-4">
+      <div className="flex-1 flex flex-col gap-4 px-4 py-4">
         {/* 통역할 문장 */}
-        <div className="bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3 flex-1">
-          <div className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
-              style={{
-                backgroundColor:
-                  speakerColors[currentIndex % speakerColors.length],
-              }}
-            >
-              {currentSentence.speaker}
+        <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
+          {/* 헤더: 프로필 + 라벨 + 음성 버튼 */}
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
+                style={{
+                  backgroundColor:
+                    speakerColors[currentIndex % speakerColors.length],
+                }}
+              >
+                {currentSentence.speaker}
+              </div>
+              <span className="text-gray-400 text-base font-semibold">
+                통역할 문장
+              </span>
             </div>
-            <span className="text-gray-400 text-base font-semibold">
-              통역할 문장
-            </span>
+
+            {isVoiceMode && (
+              <button
+                onClick={() =>
+                  playTTS(
+                    getQuestionText(),
+                    speakerLanguages[currentSentence.speaker]
+                  )
+                }
+                disabled={isPlaying}
+                className="flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 disabled:opacity-50"
+              >
+                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+              </button>
+            )}
           </div>
-          <div className="text-2xl font-semibold text-gray-900 leading-snug">
-            {!isVoiceMode || showTextInVoice
-              ? getQuestionText()
-              : '🔊 음성을 들어보세요'}
+
+          {/* 텍스트 */}
+          <div className="flex-1 flex items-start">
+            <p className="text-2xl font-semibold text-gray-900 leading-snug">
+              {!isVoiceMode || showTextInVoice
+                ? getQuestionText()
+                : '🔊 음성을 들어보세요'}
+            </p>
           </div>
-          {isVoiceMode && (
-            <button
-              onClick={() =>
-                playTTS(getQuestionText(), speakerLanguages[currentSentence.speaker])
-              }
-              disabled={isPlaying}
-              className="mt-2 self-start flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 disabled:opacity-50"
-            >
-              {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-            </button>
-          )}
         </div>
 
         {/* 모범 답안 */}
-        <div className="bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3 flex-1">
+        <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
           <span className="text-gray-400 text-base font-semibold">
             모범 답안
           </span>
-          <div className="text-2xl font-semibold text-gray-900 leading-snug">
-            {showAnswer ? (
-              getAnswerText()
-            ) : (
-              <span className="text-gray-400">모범 답안을 확인해보세요</span>
-            )}
+          <div className="flex-1 flex items-start">
+            <p className="text-2xl font-semibold text-gray-900 leading-snug">
+              {showAnswer ? (
+                getAnswerText()
+              ) : (
+                <span className="text-gray-400">모범 답안을 확인해보세요</span>
+              )}
+            </p>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t px-4 py-4 flex items-center justify-between gap-3">
+      <footer className="bg-white border-t px-4 py-4 flex items-center justify-between gap-3">
         <button
           onClick={prevSentence}
           disabled={currentIndex === 0}

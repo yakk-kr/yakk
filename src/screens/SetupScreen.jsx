@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ArrowLeft,
-  Volume2,
-  RefreshCcw,
-  Check,
-  ChevronDown,
-} from 'lucide-react';
+import { RefreshCcw, Check, ChevronDown, ChevronLeft } from 'lucide-react';
 
 function SetupScreen({
   currentScript,
@@ -38,15 +32,15 @@ function SetupScreen({
       {/* 상단 연두 그라디언트 */}
       <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#C1FF87]/30 to-transparent pointer-events-none" />
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white/70 backdrop-blur-[40px] border-b border-black/5 z-50">
-        <div className="px-4 py-4 flex items-center">
+      <header className="fixed top-0 left-0 right-0 bg-white/70 backdrop-blur-md border-b border-black/5 z-50">
+        <div className="pl-2 pr-2 py-3 flex items-center">
           <button
             onClick={() => setCurrentScreen('home')}
-            className="mr-4 p-2 hover:bg-black/5 rounded-full"
+            className="p-2 rounded-lg bg-transparent hover:bg-black/5 mr-2"
           >
-            <ArrowLeft size={20} className="text-gray-600" />
+            <ChevronLeft size={22} className="text-gray-600" />
           </button>
-          <h1 className="text-[18px] font-extrabold text-gray-900 truncate">
+          <h1 className="text-lg font-extrabold text-gray-900 truncate">
             {currentScript.topic}
           </h1>
         </div>
@@ -92,7 +86,6 @@ function SetupScreen({
               }`}
             >
               <div className="flex items-center mb-1">
-                <Volume2 size={20} className="mr-2" />
                 <span
                   className={`text-[18px] font-extrabold leading-[30px] ${
                     isVoiceMode ? 'text-gray-900' : 'text-gray-400'
