@@ -49,7 +49,7 @@ function CompleteScreen({
         </div>
 
         {/* 추천 학습 */}
-        <div className="w-full flex flex-col gap-6">
+        <div className="w-full flex flex-col gap-4">
           <h3 className="text-[18px] font-bold text-black">
             🔥 이런 주제는 어때요?
           </h3>

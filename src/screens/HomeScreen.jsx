@@ -60,7 +60,7 @@ function HomeScreen({
         </div>
 
         {/* 예시 자료 */}
-        <section className="space-y-6">
+        <section className="space-y-4">
           <h2 className="text-[18px] font-bold text-black">
             💬 이런 상황은 어때요?
           </h2>
