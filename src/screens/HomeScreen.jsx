@@ -10,77 +10,69 @@ function HomeScreen({
   setUploadedScript,
 }) {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-800">
+    <div className="min-h-screen bg-[#F8F8F8] flex flex-col">
       {/* Header */}
-      <header className="bg-white dark:bg-zinc-900 shadow-sm border-b dark:border-zinc-700">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100">
-            일본어 통역 연습
-          </h1>
+      <header className="fixed top-0 left-0 right-0 bg-white/70 backdrop-blur-md z-40">
+        <div className="px-5 py-3 flex justify-between items-center">
+          <h1 className="font-extrabold text-lg text-black">yakk</h1>
           <button
-            onClick={() => setCurrentScreen('help')} // ✅ 모달 대신 스크린 전환
-            className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full"
+            onClick={() => setCurrentScreen('help')}
+            className="p-2 rounded-lg hover:bg-gray-100"
           >
-            <HelpCircle size={24} className="text-gray-600 dark:text-gray-400" />
+            <HelpCircle size={22} className="text-gray-600" />
           </button>
         </div>
       </header>
 
       {/* Main */}
-      <div className="container mx-auto px-4 py-8">
-        {/* File Upload */}
-        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
-            JSON 스크립트 업로드
-          </h2>
+      <main className="flex-1 px-5 pt-20 pb-16 space-y-16">
+        {/* 업로드 카드 */}
+        <div className="bg-white rounded-2xl shadow-[0_4px_100px_rgba(142,218,70,0.25)] p-8 flex flex-col items-center justify-center gap-5">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-black/20 to-transparent" />
+          <p className="text-center text-gray-500 font-semibold text-base leading-relaxed">
+            JSON 파일을 업로드하고 <br /> 학습을 시작해보세요!
+          </p>
+          <label
+            htmlFor="file-upload"
+            className="px-5 py-2 bg-gradient-to-b from-black/5 via-black/10 to-black/5 border border-black/10 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-black/10 transition"
+          >
+            <Upload size={16} className="text-gray-600" />
+            <span className="text-sm font-semibold text-gray-600">
+              파일 업로드하기
+            </span>
+          </label>
           <input
+            id="file-upload"
             type="file"
             accept=".json"
             onChange={handleFileUpload}
             className="hidden"
-            id="file-upload"
           />
-          <label
-            htmlFor="file-upload"
-            className="border-2 border-dashed border-gray-300 dark:border-zinc-600 rounded-lg p-8 text-center hover:border-blue-400 transition-colors block cursor-pointer"
-          >
-            <Upload
-              size={48}
-              className="mx-auto text-gray-400 dark:text-gray-500 mb-4"
-            />
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              JSON 파일을 드래그하거나 클릭하여 업로드하세요
-            </p>
-            <span className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 cursor-pointer inline-block">
-              파일 선택
-            </span>
-          </label>
         </div>
 
-        {/* Example Scripts */}
-        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm">
-          <div className="p-6 border-b dark:border-zinc-700">
-            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
-              예시 학습 자료
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {['전체', '초급', '중급', '고급'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setSelectedTab(tab)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    selectedTab === tab
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700'
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
+        {/* 예시 자료 */}
+        <section className="space-y-6">
+          <h2 className="text-lg font-bold text-black">💬 이런 상황은 어때요?</h2>
+
+          {/* Tabs */}
+          <div className="flex items-center gap-3">
+            {['전체', '초급', '중급', '고급'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setSelectedTab(tab)}
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition ${
+                  selectedTab === tab
+                    ? 'bg-white shadow-md text-black'
+                    : 'bg-black/5 text-gray-400'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
+          {/* Scripts Grid */}
+          <div className="grid grid-cols-2 gap-3">
             {filteredScripts.map((script) => (
               <div
                 key={script.id}
@@ -88,27 +80,30 @@ function HomeScreen({
                   setUploadedScript(script);
                   setCurrentScreen('setup');
                 }}
-                className="border border-gray-200 dark:border-zinc-700 rounded-lg p-4 hover:shadow-md cursor-pointer transition-shadow"
+                className="h-36 bg-black/5 border border-black/5 rounded-xl flex items-center justify-center p-4 cursor-pointer hover:bg-black/10 transition"
               >
-                <h3 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
+                <h3 className="text-base font-bold text-black text-center leading-relaxed">
                   {script.topic}
                 </h3>
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    script.level === '초급'
-                      ? 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-200'
-                      : script.level === '중급'
-                      ? 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-200'
-                      : 'bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-200'
-                  }`}
-                >
-                  {script.level}
-                </span>
               </div>
             ))}
           </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full bg-black/5 px-5 py-6 flex justify-between items-center">
+        <div>
+          <p className="font-extrabold text-2xl text-black/30">yakk</p>
+          <p className="text-xs text-black/30">
+            한국어-일본어 통역 학습 서비스
+          </p>
         </div>
-      </div>
+        <div className="flex gap-6">
+          <div className="w-6 h-6 bg-black/30 rounded-sm" />
+          <div className="w-6 h-6 bg-black/30 rounded-sm" />
+        </div>
+      </footer>
     </div>
   );
 }
