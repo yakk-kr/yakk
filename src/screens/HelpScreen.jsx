@@ -112,12 +112,18 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
       </div>
 
       {/* 토스트 */}
-      {copied && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[14px] font-semibold px-5 py-3 rounded-2xl flex items-center gap-3 backdrop-blur-md">
-          <Check size={16} className="text-[#7BFF00]" />
-          복사가 완료되었어요!
+      <div
+        className={`fixed left-1/2 -translate-x-1/2 bg-black/80 text-white text-[14px] font-semibold pl-4 pr-5 py-3 rounded-2xl flex items-center gap-3 backdrop-blur-md transform transition-all duration-300 ${
+          copied
+            ? 'bottom-24 opacity-100 translate-y-0'
+            : 'bottom-16 opacity-0 translate-y-4 pointer-events-none'
+        }`}
+      >
+        <div className="w-5 h-5 rounded-full bg-[#7BFF00] flex items-center justify-center">
+          <Check size={12} strokeWidth={3.5} className="text-black" />
         </div>
-      )}
+        복사가 완료되었어요!
+      </div>
     </div>
   );
 }
