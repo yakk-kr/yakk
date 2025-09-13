@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload, HelpCircle } from 'lucide-react';
 import Footer from '../components/Footer';
+import Logo from '../assets/logo.svg';
 
 function HomeScreen({
   setCurrentScreen,
@@ -15,7 +16,7 @@ function HomeScreen({
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/70 backdrop-blur-md z-40">
         <div className="pl-5 pr-2 py-3 flex justify-between items-center">
-          <h1 className="font-extrabold text-lg text-black">yakk</h1>
+          <img src={Logo} alt="yakk logo" className="w-[48px] h-auto" />
           <button
             onClick={() => setCurrentScreen('help')}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5"
