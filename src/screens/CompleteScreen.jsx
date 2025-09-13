@@ -23,7 +23,7 @@ function CompleteScreen({
       <div className="relative flex flex-col items-center px-8 pt-20 pb-32 gap-12">
         {/* 체크 아이콘 */}
         <div className="w-16 h-16 bg-[#7BFF00] rounded-full flex items-center justify-center">
-          <Check size={32} className="text-black" />
+          <Check size={32} strokeWidth={4} className="text-black" />
         </div>
 
         {/* 완료 메시지 */}
@@ -36,7 +36,9 @@ function CompleteScreen({
 
         {/* 추천 학습 */}
         <div className="w-full flex flex-col gap-6">
-          <h3 className="text-[18px] font-bold text-black">🔥 이런 주제는 어때요?</h3>
+          <h3 className="text-[18px] font-bold text-black">
+            🔥 이런 주제는 어때요?
+          </h3>
           <div className="flex flex-col gap-4">
             {recommendedScripts.map((script) => (
               <div
@@ -58,8 +60,12 @@ function CompleteScreen({
                     {new Set(script.script.map((s) => s.speaker)).size}인 대화
                   </span>
                 </div>
-                <button className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-black/5">
-                  <ChevronRight size={16} className="text-black/40" />
+                <button className="p-2 rounded-lg bg-transparent hover:bg-black/5">
+                  <ChevronRight
+                    strokeWidth={2.5}
+                    size={20}
+                    className="text-gray-400"
+                  />
                 </button>
               </div>
             ))}
@@ -75,7 +81,7 @@ function CompleteScreen({
             setShowAnswer(false);
             setCurrentScreen('learning');
           }}
-          className="h-[52px] rounded-2xl bg-[#B7FF74] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
+          className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
         >
           <Upload size={16} className="text-black" />
           다시 학습하기
@@ -86,7 +92,7 @@ function CompleteScreen({
             setCurrentScreen('home');
             setUploadedScript(null);
           }}
-          className="h-[52px] rounded-2xl bg-black/5 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"
+          className="h-[52px] rounded-2xl bg-black/5 hover:bg-gray-200 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"
         >
           <Home size={16} className="text-black/40" />
           메인으로 돌아가기

@@ -23,7 +23,11 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
             onClick={() => setCurrentScreen('home')}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5 mr-2"
           >
-            <ChevronLeft size={22} className="text-gray-600" />
+            <ChevronLeft
+              strokeWidth={2.5}
+              size={20}
+              className="text-gray-400"
+            />
           </button>
           <h1 className="text-[16px] font-bold text-black">도움말</h1>
         </div>
@@ -99,7 +103,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
         <div className="bg-[#F8F8F8] px-8 pb-6 flex flex-col gap-3 max-w-[480px] mx-auto">
           <button
             onClick={copyPrompt}
-            className="h-[52px] rounded-2xl bg-[#B7FF74] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
+            className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
           >
             <Upload size={16} className="text-black" />
             프롬프트 복사하기

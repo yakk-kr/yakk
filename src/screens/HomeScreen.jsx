@@ -35,13 +35,20 @@ function HomeScreen({
           </p>
           <label
             htmlFor="file-upload"
-            className="px-5 py-2 bg-gradient-to-b from-black/5 via-black/10 to-black/5 border border-black/10 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-black/10 transition"
+            className="px-5 py-2 rounded-xl border border-black/10 bg-gradient-to-b from-black/[0.03] via-black/[0.05] to-black/[0.04] flex items-center gap-3 cursor-pointer hover:bg-black/[0.08] transition"
           >
-            <Upload size={16} className="text-gray-600" />
-            <span className="text-sm font-semibold text-gray-600">
+            <Upload size={16} className="text-black/50" />
+            <span className="text-sm font-bold text-black/50 leading-6">
               파일 업로드하기
             </span>
           </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept=".json"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
           <input
             id="file-upload"
             type="file"

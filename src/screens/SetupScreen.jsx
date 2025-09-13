@@ -30,7 +30,7 @@ function SetupScreen({
   return (
     <div className="min-h-screen bg-[#F8F8F8] relative">
       {/* 상단 연두 그라디언트 */}
-      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#C1FF87]/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#C1FF87]/15 to-transparent pointer-events-none" />
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/70 backdrop-blur-md border-b border-black/5 z-50">
         <div className="pl-2 pr-2 py-3 flex items-center">
@@ -38,25 +38,29 @@ function SetupScreen({
             onClick={() => setCurrentScreen('home')}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5 mr-2"
           >
-            <ChevronLeft size={22} className="text-gray-600" />
+            <ChevronLeft
+              strokeWidth={2.5}
+              size={20}
+              className="text-gray-400"
+            />
           </button>
-          <h1 className="text-lg font-extrabold text-gray-900 truncate">
+          <h1 className="text-lg font-bold text-gray-900 truncate">
             {currentScript.topic}
           </h1>
         </div>
       </header>
 
       {/* Main */}
-      <div className="pt-20 pb-40 px-4 relative z-10 space-y-12">
+      <div className="pt-24 pb-40 px-4 relative z-10 space-y-12">
         {/* 학습 모드 선택 */}
         <div>
-          <h3 className="text-[18px] font-extrabold leading-[30px] mb-4 text-gray-800">
+          <h3 className="text-[18px] font-bold leading-[30px] mb-4 text-gray-800">
             어떤 모드에서 학습할까요?
           </h3>
           <div className="flex flex-row gap-4">
             <button
               onClick={() => setIsVoiceMode(false)}
-              className={`flex-1 text-left px-5 py-4 rounded-[16px] border-[1.5px] transition ${
+              className={`flex-1 flex flex-col items-start justify-start text-left px-5 py-4 rounded-[16px] border-[1.5px] transition ${
                 !isVoiceMode
                   ? 'border-[#59B800] bg-[#B5FF6F]/20'
                   : 'border-transparent text-gray-700 hover:border-black/10 hover:bg-black/5'
@@ -69,17 +73,14 @@ function SetupScreen({
               >
                 📝 텍스트 모드
               </div>
-              <div
-                className={`text-sm font-semibold ${
-                  !isVoiceMode ? 'text-gray-500' : 'text-gray-500'
-                }`}
-              >
+              <div className="text-sm font-semibold text-gray-500">
                 텍스트를 보면서 차근차근 학습할 수 있어요.
               </div>
             </button>
+
             <button
               onClick={() => setIsVoiceMode(true)}
-              className={`flex-1 text-left px-5 py-4 rounded-[16px] border-[1.5px] transition ${
+              className={`flex-1 flex flex-col items-start justify-start text-left px-5 py-4 rounded-[16px] border-[1.5px] transition ${
                 isVoiceMode
                   ? 'border-[#59B800] bg-[#B5FF6F]/20'
                   : 'border-transparent text-gray-700 hover:border-black/10 hover:bg-black/5'
@@ -94,11 +95,7 @@ function SetupScreen({
                   🎧 음성 모드
                 </span>
               </div>
-              <div
-                className={`text-sm font-semibold ${
-                  isVoiceMode ? 'text-gray-500' : 'text-gray-500'
-                }`}
-              >
+              <div className="text-sm font-semibold text-gray-500">
                 TTS를 통해 실제 대화처럼 통역 연습이 가능해요.
               </div>
             </button>
@@ -108,15 +105,21 @@ function SetupScreen({
             <div className="mt-4">
               <label className="flex items-center cursor-pointer">
                 <div
-                  className={`w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center mr-3 transition-colors ${
-                    showTextInVoice ? 'bg-blue-500' : 'bg-gray-300'
+                  className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ml-1 mr-2 transition-colors ${
+                    showTextInVoice ? 'bg-[#B7FF74]' : 'bg-gray-300'
                   }`}
                 >
-                  <Check size={14} className="text-white" />
+                  <Check
+                    size={12}
+                    strokeWidth={4}
+                    className={`${
+                      showTextInVoice ? 'text-black' : 'text-white'
+                    }`}
+                  />
                 </div>
                 <span
-                  className={`text-sm ${
-                    showTextInVoice ? 'text-gray-800' : 'text-gray-500'
+                  className={`text-sm font-bold ${
+                    showTextInVoice ? 'text-gray-600' : 'text-gray-300'
                   }`}
                 >
                   텍스트도 함께 표시
@@ -134,7 +137,7 @@ function SetupScreen({
 
         {/* 화자별 언어 설정 */}
         <div>
-          <h3 className="text-[18px] font-extrabold leading-[30px] mb-4 text-gray-800">
+          <h3 className="text-[18px] font-bold leading-[30px] mb-4 text-gray-800">
             화자별 언어를 설정해주세요.
           </h3>
           <div className="space-y-4">
@@ -153,7 +156,7 @@ function SetupScreen({
                   >
                     {speaker}
                   </div>
-                  <span className="font-medium text-gray-800">
+                  <span className="font-bold text-gray-800">
                     화자 {speaker}
                   </span>
                 </div>
@@ -166,7 +169,7 @@ function SetupScreen({
                         [speaker]: e.target.value,
                       })
                     }
-                    className="appearance-none bg-white text-gray-800 rounded-[12px] px-4 py-2 pr-8 focus:outline-none hover:bg-black/5 active:bg-black/5"
+                    className="appearance-none bg-white font-semibold text-gray-600 rounded-[12px] px-4 py-2 pr-8 focus:outline-none hover:bg-black/5 active:bg-black/5"
                   >
                     <option value="jp">🇯🇵 일본어</option>
                     <option value="kr">🇰🇷 한국어</option>
@@ -181,7 +184,7 @@ function SetupScreen({
             <div className="flex justify-center">
               <button
                 onClick={toggleSpeakerLanguage}
-                className="flex items-center px-4 py-2 text-blue-600 hover:bg-black/5 rounded-lg"
+                className="flex items-center px-4 py-2 text-[#59B800] hover:bg-black/5 rounded-lg"
               >
                 <RefreshCcw size={16} className="mr-2" />
                 언어 교체
@@ -197,7 +200,7 @@ function SetupScreen({
         <div className="bg-[#F8F8F8] px-4 pb-6">
           <button
             onClick={startLearning}
-            className="w-full bg-[#B7FF74] text-black py-4 rounded-2xl font-bold hover:bg-lime-300 transition-colors text-lg"
+            className="w-full bg-[#B7FF74] text-black py-4 rounded-2xl font-bold hover:bg-[#92FF2B] transition-colors text-lg"
           >
             학습 시작하기
           </button>

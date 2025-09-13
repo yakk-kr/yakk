@@ -90,7 +90,7 @@ function LearningScreen({
                   )
                 }
                 disabled={isPlaying}
-                className="flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 disabled:opacity-50"
+                className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60 disabled:opacity-50"
               >
                 {isPlaying ? <Pause size={16} /> : <Play size={16} />}
               </button>
@@ -137,7 +137,7 @@ function LearningScreen({
 
         <button
           onClick={() => setShowAnswer(!showAnswer)}
-          className="flex-1 h-12 bg-[#B7FF74] text-black font-bold rounded-2xl hover:bg-lime-300 transition-colors"
+          className="flex-1 h-12 bg-[#B7FF74] text-black font-bold rounded-2xl hover:bg-[#92FF2B] transition-colors"
         >
           {showAnswer ? '답안 숨기기' : '모범 답안 확인'}
         </button>
