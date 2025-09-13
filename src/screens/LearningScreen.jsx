@@ -50,7 +50,7 @@ function LearningScreen({
   const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
 
   return (
-    <div className="min-h-[100dvh] bg-[#F1F8EB] flex flex-col">
+    <div className="min-h-[100dvh] bg-[#F1F8EB] flex flex-col overflow-hidden">
       {/* Header */}
       <LearningHeader
         currentScript={currentScript}

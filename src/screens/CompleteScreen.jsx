@@ -1,6 +1,6 @@
 import React from 'react';
-import { Check, ChevronRight, Upload, Home } from 'lucide-react';
-import { dummyScripts } from '../data.js'; // 메인에서 쓰던 예시 데이터 가져오기
+import { Check, ChevronRight, Upload, Home, X } from 'lucide-react';
+import { dummyScripts } from '../data.js';
 
 function CompleteScreen({
   currentScript,
@@ -9,18 +9,30 @@ function CompleteScreen({
   setShowAnswer,
   setUploadedScript,
 }) {
-  // 추천 학습 데이터: 현재 학습한 스크립트를 제외한 나머지
   const recommendedScripts = dummyScripts.filter(
     (script) => script.id !== currentScript.id
   );
 
   return (
-    <div className="relative min-h-screen bg-[#F8F8F8] overflow-hidden">
-      {/* 상단 그라데이션 */}
+    <div className="relative min-h-[100dvh] bg-[#F8F8F8] flex flex-col">
+      {/* 상단 그라디언트 */}
       <div className="absolute top-0 left-0 w-full h-80 opacity-30 bg-gradient-to-b from-[#C1FF87] to-transparent pointer-events-none" />
 
-      {/* 본문 */}
-      <div className="relative flex flex-col items-center px-8 pt-20 pb-32 gap-12">
+      {/* 닫기 버튼 */}
+      <div className="absolute top-4 right-4 z-20">
+        <button
+          onClick={() => {
+            setCurrentScreen('home');
+            setUploadedScript(null);
+          }}
+          className="p-2 rounded-full bg-black/5 hover:bg-black/10 mr-2"
+        >
+          <X size={18} strokeWidth={3} className="text-gray-400" />
+        </button>
+      </div>
+
+      {/* 본문 (스크롤 가능) */}
+      <div className="flex-1 overflow-y-auto px-5 pt-20 pb-40 flex flex-col items-center gap-12">
         {/* 체크 아이콘 */}
         <div className="w-16 h-16 bg-[#7BFF00] rounded-full flex items-center justify-center">
           <Check size={32} strokeWidth={4} className="text-black" />
@@ -28,9 +40,11 @@ function CompleteScreen({
 
         {/* 완료 메시지 */}
         <div className="flex flex-col items-center gap-4 text-center">
-          <h2 className="text-[20px] font-bold text-black">학습 완료!</h2>
-          <p className="text-[14px] font-semibold text-black/50 leading-[23px]">
-            {currentScript.topic} 학습을 <br /> 완료했습니다.
+          <h2 className="text-[24px] font-extrabold text-black">
+            학습 완료! 💚
+          </h2>
+          <p className="text-[16px] font-semibold text-black/50 leading-[27px]">
+            {currentScript.topic} 학습을 <br /> 완료했어요.
           </p>
         </div>
 
@@ -60,7 +74,7 @@ function CompleteScreen({
                     {new Set(script.script.map((s) => s.speaker)).size}인 대화
                   </span>
                 </div>
-                <button className="p-2 rounded-lg bg-transparent hover:bg-black/5">
+                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-transparent hover:bg-black/5">
                   <ChevronRight
                     strokeWidth={2.5}
                     size={20}
@@ -74,29 +88,34 @@ function CompleteScreen({
       </div>
 
       {/* 하단 버튼 */}
-      <div className="absolute bottom-0 left-0 w-full bg-[#F8F8F8] px-8 pb-6 flex flex-col gap-3">
-        <button
-          onClick={() => {
-            setCurrentIndex(0);
-            setShowAnswer(false);
-            setCurrentScreen('learning');
-          }}
-          className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
-        >
-          <Upload size={16} className="text-black" />
-          다시 학습하기
-        </button>
+      <div className="fixed bottom-0 left-0 right-0 z-20 px-5 pb-5">
+        {/* 그라디언트 */}
+        <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
 
-        <button
-          onClick={() => {
-            setCurrentScreen('home');
-            setUploadedScript(null);
-          }}
-          className="h-[52px] rounded-2xl bg-black/5 hover:bg-gray-200 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"
-        >
-          <Home size={16} className="text-black/40" />
-          메인으로 돌아가기
-        </button>
+        <div className="bg-[#F8F8F8] flex flex-col gap-3">
+          <button
+            onClick={() => {
+              setCurrentIndex(0);
+              setShowAnswer(false);
+              setCurrentScreen('learning');
+            }}
+            className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
+          >
+            <Upload size={16} className="text-black" />
+            다시 학습하기
+          </button>
+
+          <button
+            onClick={() => {
+              setCurrentScreen('home');
+              setUploadedScript(null);
+            }}
+            className="h-[52px] rounded-2xl bg-black/5 hover:bg-gray-200 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"
+          >
+            <Home size={16} className="text-black/40" />
+            메인으로 돌아가기
+          </button>
+        </div>
       </div>
     </div>
   );
