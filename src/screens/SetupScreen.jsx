@@ -63,7 +63,7 @@ function SetupScreen({
               className={`flex-1 flex flex-col items-start justify-start text-left px-5 py-4 rounded-[16px] border-[1.5px] transition ${
                 !isVoiceMode
                   ? 'border-[#59B800] bg-[#B5FF6F]/20'
-                  : 'border-transparent text-gray-700 hover:border-black/10 hover:bg-black/5'
+                  : 'border-black/5 text-gray-700 hover:border-black/10 hover:bg-black/5'
               }`}
             >
               <div
@@ -83,7 +83,7 @@ function SetupScreen({
               className={`flex-1 flex flex-col items-start justify-start text-left px-5 py-4 rounded-[16px] border-[1.5px] transition ${
                 isVoiceMode
                   ? 'border-[#59B800] bg-[#B5FF6F]/20'
-                  : 'border-transparent text-gray-700 hover:border-black/10 hover:bg-black/5'
+                  : 'border-black/5 text-gray-700 hover:border-black/10 hover:bg-black/5'
               }`}
             >
               <div className="flex items-center mb-1">
@@ -102,21 +102,8 @@ function SetupScreen({
           </div>
 
           {isVoiceMode && (
-            <div className="mt-4">
+            <div className="mt-4 flex justify-end">
               <label className="flex items-center cursor-pointer">
-                <div
-                  className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ml-1 mr-2 transition-colors ${
-                    showTextInVoice ? 'bg-[#B7FF74]' : 'bg-gray-300'
-                  }`}
-                >
-                  <Check
-                    size={12}
-                    strokeWidth={4}
-                    className={`${
-                      showTextInVoice ? 'text-black' : 'text-white'
-                    }`}
-                  />
-                </div>
                 <span
                   className={`text-sm font-bold ${
                     showTextInVoice ? 'text-gray-600' : 'text-gray-300'
@@ -130,6 +117,20 @@ function SetupScreen({
                   onChange={(e) => setShowTextInVoice(e.target.checked)}
                   className="hidden"
                 />
+
+                <div
+                  className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ml-2 mr-1 transition-colors ${
+                    showTextInVoice ? 'bg-[#B7FF74]' : 'bg-gray-300'
+                  }`}
+                >
+                  <Check
+                    size={12}
+                    strokeWidth={4}
+                    className={`${
+                      showTextInVoice ? 'text-black' : 'text-white'
+                    }`}
+                  />
+                </div>
               </label>
             </div>
           )}
