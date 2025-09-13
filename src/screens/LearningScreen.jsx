@@ -1,5 +1,12 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Play,
+} from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
 
 function LearningScreen({
@@ -129,9 +136,9 @@ function LearningScreen({
         <button
           onClick={prevSentence}
           disabled={currentIndex === 0}
-          className="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 rounded-lg disabled:opacity-50"
+          className="flex items-center px-3 py-2 text-gray-400 bg-transparent hover:bg-gray-100 rounded-xl disabled:opacity-50"
         >
-          <ArrowLeft size={18} className="mr-1" />
+          <ChevronLeft strokeWidth={2.5} size={18} className="mr-1" />
           이전
         </button>
 
@@ -144,10 +151,10 @@ function LearningScreen({
 
         <button
           onClick={nextSentence}
-          className="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 rounded-lg"
+          className="flex items-center px-3 py-2 text-gray-400 bg-transparent hover:bg-gray-100 rounded-xl"
         >
           다음
-          <ArrowRight size={18} className="ml-1" />
+          <ChevronRight strokeWidth={2.5} size={18} className="ml-1" />
         </button>
       </footer>
     </div>
