@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -56,6 +56,22 @@ function LearningScreen({
   // 화자 색상 팔레트
   const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
 
+  // Add this useEffect hook for automatic playback
+  useEffect(() => {
+    if (isVoiceMode && currentSentence) {
+      const text = getQuestionText();
+      const language = speakerLanguages[currentSentence.speaker];
+
+      // Delay playback slightly to ensure the component and data are ready
+      const timer = setTimeout(() => {
+        playTTS(text, language);
+      }, 500);
+
+      // Clean up the timer to prevent memory leaks or unexpected behavior
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, isVoiceMode, currentSentence]);
+
   return (
     <div className="min-h-[100dvh] bg-[#F1F8EB] flex flex-col overflow-hidden">
       {/* Header */}
@@ -91,13 +107,14 @@ function LearningScreen({
             {isVoiceMode && (
               <button
                 onClick={() =>
-                  playTTS(
-                    getQuestionText(),
-                    speakerLanguages[currentSentence.speaker]
-                  )
+                  isPlaying
+                    ? playTTS(null, null)
+                    : playTTS(
+                        getQuestionText(),
+                        speakerLanguages[currentSentence.speaker]
+                      )
                 }
-                disabled={isPlaying}
-                className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60 disabled:opacity-50"
+                className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60"
               >
                 {isPlaying ? <Pause size={16} /> : <Play size={16} />}
               </button>

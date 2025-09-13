@@ -28,7 +28,10 @@ function InterpreterApp() {
   const [copied, setCopied] = useState(false); // ✅ showHelp 제거
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [showTextInVoice, setShowTextInVoice] = useState(true);
-  const [speakerLanguages, setSpeakerLanguages] = useState({ A: 'jp', B: 'kr' });
+  const [speakerLanguages, setSpeakerLanguages] = useState({
+    A: 'jp',
+    B: 'kr',
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -72,15 +75,51 @@ function InterpreterApp() {
     }
   };
 
-  const playTTS = (text, lang) => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lang === 'jp' ? 'ja-JP' : 'ko-KR';
-      utterance.rate = 0.8;
-      setIsPlaying(true);
-      utterance.onend = () => setIsPlaying(false);
-      speechSynthesis.speak(utterance);
+  const playTTS = (text, language) => {
+    // Check if speech synthesis is supported
+    if (!('speechSynthesis' in window)) {
+      console.error('Speech synthesis is not supported in this browser.');
+      return;
     }
+
+    // If already speaking, stop the current speech
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Set language
+    const langCode = language === 'jp' ? 'ja-JP' : 'ko-KR';
+    utterance.lang = langCode;
+
+    // Set speech rate
+    utterance.rate = 0.8;
+
+    // Find a specific voice for better quality
+    const voices = window.speechSynthesis.getVoices();
+    const selectedVoice = voices.find((voice) => voice.lang === langCode);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+
+    // Event handlers to manage isPlaying state
+    utterance.onstart = () => {
+      setIsPlaying(true);
+    };
+
+    utterance.onend = () => {
+      setIsPlaying(false);
+    };
+
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event);
+      setIsPlaying(false);
+    };
+
+    // Start speaking
+    window.speechSynthesis.speak(utterance);
   };
 
   const toggleSpeakerLanguage = () => {
@@ -157,7 +196,8 @@ function InterpreterApp() {
       />
     );
 
-  if (currentScreen === 'help') // ✅ 새로 추가
+  if (currentScreen === 'help')
+    // ✅ 새로 추가
     return (
       <HelpScreen
         setCurrentScreen={setCurrentScreen}
