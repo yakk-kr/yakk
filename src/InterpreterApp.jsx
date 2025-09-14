@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { dummyScripts, promptTemplate } from './data.js';
+import { learningSamples, promptTemplate } from './data.js';
 
 import HomeScreen from './screens/HomeScreen';
 import SetupScreen from './screens/SetupScreen';
@@ -38,10 +38,10 @@ function InterpreterApp() {
 
   const filteredScripts =
     selectedTab === '전체'
-      ? dummyScripts
-      : dummyScripts.filter((script) => script.level === selectedTab);
+      ? learningSamples
+      : learningSamples.filter((script) => script.level === selectedTab);
 
-  const currentScript = uploadedScript || dummyScripts[0];
+  const currentScript = uploadedScript || learningSamples[0];
   const currentSentence = currentScript?.script[currentIndex];
   const progress = currentScript
     ? ((currentIndex + 1) / currentScript.script.length) * 100

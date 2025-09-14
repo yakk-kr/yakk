@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check, ChevronRight, Upload, Home, X } from 'lucide-react';
-import { dummyScripts } from '../data.js';
+import { learningSamples } from '../data.js';
 
 function CompleteScreen({
   currentScript,
@@ -9,7 +9,7 @@ function CompleteScreen({
   setShowAnswer,
   setUploadedScript,
 }) {
-  const recommendedScripts = dummyScripts.filter(
+  const recommendedScripts = learningSamples.filter(
     (script) => script.id !== currentScript.id
   );
 
@@ -88,7 +88,7 @@ function CompleteScreen({
       </div>
 
       {/* 하단 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 z-20 px-5 pb-5">
+      <div className="fixed bottom-0 left-0 right-0 z-0 px-5 pb-5">
         {/* 그라디언트 */}
         <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
 
@@ -117,6 +117,7 @@ function CompleteScreen({
           </button>
         </div>
       </div>
+      <div className="w-full h-[20px] bg-[#F8F8F8] fixed bottom-0 left-0 z-0 pointer-events-none" />
     </div>
   );
 }
