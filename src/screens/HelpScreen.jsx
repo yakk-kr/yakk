@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Copy, Check, Upload } from 'lucide-react';
+import { ChevronLeft, Copy, Check } from 'lucide-react';
 
 function HelpScreen({ setCurrentScreen, promptTemplate }) {
   const [copied, setCopied] = useState(false);
@@ -38,42 +38,66 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
         {/* Step 1 */}
         <div className="flex flex-col gap-5">
           <div className="flex gap-3 items-start">
-            <div className="w-8 h-8 bg-[#B7FF74] rounded-full flex items-center justify-center font-extrabold text-[16px] text-black">
-              1
+            <div className="w-8 h-8 bg-[#B7FF74] rounded-lg flex items-center justify-center font-extrabold text-[16px] text-black">
+              Q
             </div>
             <div className="flex-1">
               <h2 className="text-[18px] font-extrabold text-black leading-[30px]">
-                JSON 파일이 뭔가요?
+                JSON이 뭐예요?
               </h2>
               <p className="mt-3 text-[14px] font-semibold text-black/70 leading-[23px]">
-                JSON(JavaScript Object Notation)은 사람이 읽기 쉬운 텍스트
-                기반의 데이터 교환 형식으로, 데이터를 저장하고 전송하는 데
-                사용됩니다.
+                정보를 깔끔하게 정리해서 담는 파일 형식이에요.
+                <br />
+                엑셀은 표로 정리하듯 JSON은 앱에서 대화 스크립트를 정리해 두는
+                방식이에요.
               </p>
             </div>
           </div>
-          <div className="h-[175px] bg-black/5 rounded-2xl" />
+          {/* <div className="h-[175px] bg-black/5 rounded-2xl" /> */}
         </div>
 
         {/* Step 2 */}
         <div className="flex flex-col gap-5">
           <div className="flex gap-3 items-start">
-            <div className="w-8 h-8 bg-[#B7FF74] rounded-full flex items-center justify-center font-extrabold text-[16px] text-black">
-              2
+            <div className="w-8 h-8 bg-[#B7FF74] rounded-lg flex items-center justify-center font-extrabold text-[16px] text-black">
+              Q
             </div>
             <div className="flex-1">
               <h2 className="text-[18px] font-extrabold text-black leading-[30px]">
-                어떻게 제가 원하는 내용의
-                <br />
-                스크립트를 만들죠?
+                왜 JSON을 쓰나요?
               </h2>
               <p className="mt-3 text-[14px] font-semibold text-black/70 leading-[23px]">
-                아래 작성된 예시 프롬프트를 ChatGPT, Gemini와 같은 AI에
-                붙여넣기만 하면 만들 수 있어요!
+                단순 텍스트보다 구조가 정해져 있어서 누가 말했는지, 어떤
+                언어인지를 나눠 담을 수 있어요.
+                <br />
+                앱과 웹에서 쉽게 읽고 쓸 수 있는 표준이라 데이터를 주고받는 데
+                가장 많이 쓰입니다.
               </p>
             </div>
           </div>
-          <div className="h-[175px] bg-black/5 rounded-2xl" />
+          {/* <div className="h-[175px] bg-black/5 rounded-2xl" /> */}
+        </div>
+
+        {/* Step 3 */}
+        <div className="flex flex-col gap-5">
+          <div className="flex gap-3 items-start">
+            <div className="w-8 h-8 bg-[#B7FF74] rounded-lg flex items-center justify-center font-extrabold text-[16px] text-black">
+              Q
+            </div>
+            <div className="flex-1">
+              <h2 className="text-[18px] font-extrabold text-black leading-[30px]">
+                yakk에서는 JSON을 어떻게 활용하나요?
+              </h2>
+              <p className="mt-3 text-[14px] font-semibold text-black/70 leading-[23px]">
+                JSON은 단순하면서도 구조가 정해져 있어서 대화 스크립트를
+                주제·상황·난이도별로 깔끔하게 정리할 수 있어요.
+                <br />
+                그래서 사용자가 직접 AI를 통해 원하는 조건(여행, 면접, 일상 대화
+                등)에 맞춰 스크립트를 만들어 불러올 수 있습니다.
+              </p>
+            </div>
+          </div>
+          {/* <div className="h-[175px] bg-black/5 rounded-2xl" /> */}
         </div>
 
         {/* 프롬프트 박스 */}
@@ -105,7 +129,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
             onClick={copyPrompt}
             className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
           >
-            <Upload size={16} className="text-black" />
+            <Copy size={16} strokeWidth={2.5} className="text-black" />
             프롬프트 복사하기
           </button>
         </div>

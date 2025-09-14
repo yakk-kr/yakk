@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, ChevronRight, Upload, Home, X } from 'lucide-react';
+import { Check, ChevronRight, Upload, Home, X, RefreshCcw } from 'lucide-react';
 import { learningSamples } from '../data.js';
 
 function CompleteScreen({
@@ -74,10 +74,13 @@ function CompleteScreen({
                     {new Set(script.script.map((s) => s.speaker)).size}인 대화
                   </span>
                 </div>
-                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-transparent hover:bg-black/5">
+                <button
+                  onClick={() => setCurrentScreen('help')}
+                  className="p-2 rounded-lg bg-transparent hover:bg-black/5"
+                >
                   <ChevronRight
+                    size={22}
                     strokeWidth={2.5}
-                    size={20}
                     className="text-gray-400"
                   />
                 </button>
@@ -101,7 +104,7 @@ function CompleteScreen({
             }}
             className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
           >
-            <Upload size={16} className="text-black" />
+            <RefreshCcw strokeWidth={2.5} size={16} className="text-black" />
             다시 학습하기
           </button>
 
@@ -112,7 +115,7 @@ function CompleteScreen({
             }}
             className="h-[52px] rounded-2xl bg-black/5 hover:bg-gray-200 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"
           >
-            <Home size={16} className="text-black/40" />
+            <Home size={16} strokeWidth={2.5} className="text-gray-400" />
             메인으로 돌아가기
           </button>
         </div>
