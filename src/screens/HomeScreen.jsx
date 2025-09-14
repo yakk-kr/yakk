@@ -86,22 +86,29 @@ function HomeScreen({
             💬 이런 상황은 어때요?
           </h2>
 
-          {/* Tabs */}
-          <div className="flex items-center gap-3">
-            {categoryTabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setSelectedTab(tab)}
-                className={`px-3 py-1.5 rounded-full text-[14px] font-semibold transition
-                  ${
-                    selectedTab === tab
-                      ? 'bg-white shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-black'
-                      : 'bg-black/5 text-black/40'
-                  }`}
-              >
-                {tab}
-              </button>
-            ))}
+          <div className="relative">
+            {/* Tabs 영역 */}
+            <div className="overflow-x-auto no-scrollbar pr-[64px]">
+              <div className="flex gap-3">
+                {categoryTabs.map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setSelectedTab(tab)}
+                    className={`px-3 py-1.5 whitespace-nowrap rounded-full text-[14px] font-semibold transition
+            ${
+              selectedTab === tab
+                ? 'bg-white shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-black'
+                : 'bg-black/5 text-black/40'
+            }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 오른쪽 고정 그라디언트 오버레이 */}
+            <div className="absolute top-0 right-0 w-[64px] h-full bg-gradient-to-l from-[#F8F8F8] to-transparent z-20 pointer-events-none" />
           </div>
 
           {/* Scripts Grid */}
