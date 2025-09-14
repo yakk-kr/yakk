@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Upload, HelpCircle } from 'lucide-react';
+import { Upload, HelpCircle, MessageCircleMore } from 'lucide-react';
 import Footer from '../components/Footer';
 import Logo from '../assets/logo.svg';
 import { learningSamples } from '../data.js';
@@ -55,10 +55,10 @@ function HomeScreen({
       </header>
 
       {/* Main */}
-      <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[1024px] mx-auto w-full">
+      <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[960px] mx-auto w-full">
         {/* 업로드 카드 */}
         <div className="bg-white rounded-2xl shadow-[0_4px_100px_rgba(142,218,70,0.25)] p-8 flex flex-col items-center justify-center gap-5">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-black/20 to-transparent" />
+          <MessageCircleMore size={48} className="text-gray-300" />
           <p className="text-center text-gray-500 font-semibold text-base leading-relaxed">
             JSON 파일을 업로드하고 <br /> 학습을 시작해보세요!
           </p>

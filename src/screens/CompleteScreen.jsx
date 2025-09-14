@@ -1,6 +1,7 @@
-import React from 'react';
-import { Check, ChevronRight, Upload, Home, X, RefreshCcw } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Check, ChevronRight, Home, X, RefreshCcw } from 'lucide-react';
 import { learningSamples } from '../data.js';
+import confetti from 'canvas-confetti';
 
 function CompleteScreen({
   currentScript,
@@ -13,13 +14,27 @@ function CompleteScreen({
     (script) => script.id !== currentScript.id
   );
 
+  // Confetti Effect
+  useEffect(() => {
+    confetti({
+      particleCount: 80,
+      spread: 90,
+      origin: { y: 0.6 },
+      zIndex: 9999,
+      startVelocity: 40,
+      decay: 0.92,
+      ticks: 100,
+      colors: ['#ffffff', '#37FF37', '#FBFF88'],
+    });
+  }, []);
+
   return (
-    <div className="relative min-h-[100dvh] bg-[#F8F8F8] flex flex-col">
+    <div className="relative min-h-[100dvh] bg-[#F8F8F8] flex flex-col overflow-hidden">
       {/* 상단 그라디언트 */}
       <div className="absolute top-0 left-0 w-full h-80 opacity-30 bg-gradient-to-b from-[#C1FF87] to-transparent pointer-events-none" />
 
       {/* 닫기 버튼 */}
-      <div className="absolute top-4 right-4 z-20">
+      <div className="absolute top-5 right-4 z-20">
         <button
           onClick={() => {
             setCurrentScreen('home');
@@ -31,8 +46,8 @@ function CompleteScreen({
         </button>
       </div>
 
-      {/* 본문 (스크롤 가능) */}
-      <div className="flex-1 overflow-y-auto px-5 pt-20 pb-40 flex flex-col items-center gap-12">
+      {/* 본문 - 최대 너비 960px 컨테이너 */}
+      <div className="flex-1 overflow-y-auto px-5 pt-20 pb-40 flex flex-col items-center gap-12 max-w-[960px] mx-auto w-full">
         {/* 체크 아이콘 */}
         <div className="w-16 h-16 bg-[#7BFF00] rounded-full flex items-center justify-center">
           <Check size={32} strokeWidth={4} className="text-black" />
@@ -90,12 +105,12 @@ function CompleteScreen({
         </div>
       </div>
 
-      {/* 하단 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 z-0 px-5 pb-5">
-        {/* 그라디언트 */}
-        <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
+      {/* 하단 버튼 - 전체 너비 컨테이너 */}
+      <div className="fixed bottom-0 left-0 right-0 z-10 px-5 pb-5 bg-[#F8F8F8]">
+        {/* 그라디언트 효과를 위한 상단 레이어 */}
+        <div className="absolute top-[-20px] left-0 w-full h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
 
-        <div className="bg-[#F8F8F8] flex flex-col gap-3">
+        <div className="max-w-[960px] mx-auto w-full flex flex-col gap-3">
           <button
             onClick={() => {
               setCurrentIndex(0);
@@ -120,6 +135,8 @@ function CompleteScreen({
           </button>
         </div>
       </div>
+
+      {/* 하단 배경 블록을 푸터 컨테이너 바로 아래에 둡니다. */}
       <div className="w-full h-[20px] bg-[#F8F8F8] fixed bottom-0 left-0 z-0 pointer-events-none" />
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Copy, Check } from 'lucide-react';
+import { ChevronLeft, Copy, Check, Bot } from 'lucide-react';
 
 function HelpScreen({ setCurrentScreen, promptTemplate }) {
   const [copied, setCopied] = useState(false);
@@ -34,7 +34,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
       </div>
 
       {/* 본문 */}
-      <div className="relative px-8 pt-24 pb-32 flex flex-col gap-16 max-w-[480px] mx-auto">
+      <div className="relative px-8 pt-24 pb-32 flex flex-col gap-16 max-w-[640px] mx-auto">
         {/* Step 1 */}
         <div className="flex flex-col gap-5">
           <div className="flex gap-3 items-start">
@@ -43,7 +43,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
             </div>
             <div className="flex-1">
               <h2 className="text-[18px] font-extrabold text-black leading-[30px]">
-                JSON이 뭐예요?
+                JSON이 뭔가요?
               </h2>
               <p className="mt-3 text-[14px] font-semibold text-black/70 leading-[23px]">
                 정보를 깔끔하게 정리해서 담는 파일 형식이에요.
@@ -101,11 +101,15 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
         </div>
 
         {/* 프롬프트 박스 */}
-        <div className="bg-black/5 rounded-2xl border border-black/5 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2 border-b border-black/5">
-            <span className="text-[14px] font-semibold text-black/70">
-              프롬프트
-            </span>
+        <div className="bg-gradient-to-b from-[#EFEFEF] via-[#E8E8E8] to-[#EFEFEF] rounded-2xl border border-black/5 overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2">
+            <div className="flex items-center gap-2">
+              {/* lucide-react Bot 아이콘 (배경 제거됨) */}
+              <Bot size={18} className="text-gray-400" strokeWidth={2} />
+              <span className="text-[14px] font-semibold text-black/70">
+                Prompt
+              </span>
+            </div>
             <button
               onClick={copyPrompt}
               className="p-2 rounded-lg bg-transparent hover:bg-black/5"
@@ -113,7 +117,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
               <Copy size={16} strokeWidth={2.5} className="text-gray-400" />
             </button>
           </div>
-          <div className="bg-white p-4 h-[312px] overflow-y-auto">
+          <div className="bg-transparent p-4 h-[240px] overflow-y-auto">
             <pre className="text-xs text-black/50 font-mono font-semibold whitespace-pre-wrap">
               {promptTemplate}
             </pre>
@@ -124,7 +128,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
       {/* 하단 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 z-20">
         <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
-        <div className="bg-[#F8F8F8] px-8 pb-6 flex flex-col gap-3 max-w-[480px] mx-auto">
+        <div className="bg-[#F8F8F8] px-8 pb-6 flex flex-col gap-3 max-w-[640px] mx-auto">
           <button
             onClick={copyPrompt}
             className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"

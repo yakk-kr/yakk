@@ -19,7 +19,6 @@ function LearningScreen({
 }) {
   const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
 
-  // 화자 이름 기반 고정 색상
   function getSpeakerColor(speaker) {
     if (!speaker) return '#E0E0E0';
     const hash = [...speaker].reduce(
@@ -29,14 +28,12 @@ function LearningScreen({
     return speakerColors[hash % speakerColors.length];
   }
 
-  // 질문 텍스트
   const getQuestionText = () => {
     if (!currentSentence) return '';
     const lang = speakerLanguages?.[currentSentence.speaker] ?? 'kr';
     return currentSentence?.[lang] || '';
   };
 
-  // 답변 텍스트
   const getAnswerText = () => {
     if (!currentSentence) return '';
     const questionLang = speakerLanguages?.[currentSentence.speaker] ?? 'kr';
@@ -44,7 +41,6 @@ function LearningScreen({
     return currentSentence?.[answerLang] || '';
   };
 
-  // 다음 문장
   const nextSentence = () => {
     if (currentIndex < currentScript.script.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -54,7 +50,6 @@ function LearningScreen({
     }
   };
 
-  // 이전 문장
   const prevSentence = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
@@ -62,7 +57,6 @@ function LearningScreen({
     }
   };
 
-  // 음성 모드일 때 TTS 실행
   useEffect(() => {
     if (isVoiceMode && currentSentence) {
       const text = getQuestionText();
@@ -84,94 +78,100 @@ function LearningScreen({
         isVoiceMode={isVoiceMode}
       />
 
-      {/* 콘텐츠 */}
-      <div className="flex-1 flex flex-col gap-4 px-4 py-4">
-        {/* 통역할 문장 */}
-        <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
-                style={{
-                  backgroundColor: getSpeakerColor(currentSentence?.speaker),
-                }}
-              >
-                {currentSentence?.speaker ?? '?'}
+      {/* 메인 콘텐츠 컨테이너: 최대 너비 960px, 중앙 정렬 */}
+      <div className="flex-1 flex flex-col items-center">
+        <div className="flex-1 flex flex-col gap-4 px-4 py-4 w-full max-w-[960px]">
+          {/* 통역할 문장 */}
+          <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
+                  style={{
+                    backgroundColor: getSpeakerColor(currentSentence?.speaker),
+                  }}
+                >
+                  {currentSentence?.speaker ?? '?'}
+                </div>
+                <span className="text-gray-400 text-base font-semibold">
+                  통역할 문장
+                </span>
               </div>
-              <span className="text-gray-400 text-base font-semibold">
-                통역할 문장
-              </span>
+
+              {isVoiceMode && (
+                <button
+                  onClick={() =>
+                    isPlaying
+                      ? playTTS(null, null)
+                      : playTTS(
+                          getQuestionText(),
+                          speakerLanguages?.[currentSentence?.speaker] ?? 'kr'
+                        )
+                  }
+                  className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60"
+                >
+                  {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                </button>
+              )}
             </div>
 
-            {isVoiceMode && (
-              <button
-                onClick={() =>
-                  isPlaying
-                    ? playTTS(null, null)
-                    : playTTS(
-                        getQuestionText(),
-                        speakerLanguages?.[currentSentence?.speaker] ?? 'kr'
-                      )
-                }
-                className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60"
-              >
-                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-              </button>
-            )}
+            <div className="flex-1 flex items-start">
+              <p className="text-2xl font-semibold text-gray-900 leading-snug">
+                {!isVoiceMode || showTextInVoice
+                  ? getQuestionText()
+                  : '🔊 음성을 들어보세요'}
+              </p>
+            </div>
           </div>
 
-          <div className="flex-1 flex items-start">
-            <p className="text-2xl font-semibold text-gray-900 leading-snug">
-              {!isVoiceMode || showTextInVoice
-                ? getQuestionText()
-                : '🔊 음성을 들어보세요'}
-            </p>
-          </div>
-        </div>
-
-        {/* 모범 답안 */}
-        <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
-          <span className="text-gray-400 text-base font-semibold">
-            모범 답안
-          </span>
-          <div className="flex-1 flex items-start">
-            <p className="text-2xl font-semibold text-gray-900 leading-snug">
-              {showAnswer ? (
-                getAnswerText()
-              ) : (
-                <span className="text-gray-400">모범 답안을 확인해보세요</span>
-              )}
-            </p>
+          {/* 모범 답안 */}
+          <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
+            <span className="text-gray-400 text-base font-semibold">
+              모범 답안
+            </span>
+            <div className="flex-1 flex items-start">
+              <p className="text-2xl font-semibold text-gray-900 leading-snug">
+                {showAnswer ? (
+                  getAnswerText()
+                ) : (
+                  <span className="text-gray-400">
+                    모범 답안을 확인해보세요
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* 푸터 */}
-      <footer className="bg-white border-t px-4 py-4 flex items-center justify-between gap-3">
-        <button
-          onClick={prevSentence}
-          disabled={currentIndex === 0}
-          className="flex items-center px-3 py-2 text-gray-400 bg-transparent hover:bg-gray-100 rounded-xl disabled:opacity-50"
-        >
-          <ChevronLeft strokeWidth={2.5} size={18} className="mr-1" />
-          이전
-        </button>
+      <div className="bg-white border-t px-4 py-4 w-full flex justify-center">
+        <footer className="flex items-center justify-between gap-3 w-full max-w-[960px]">
+          <button
+            onClick={prevSentence}
+            disabled={currentIndex === 0}
+            className="flex items-center px-3 py-2 text-gray-400 bg-transparent hover:bg-gray-100 rounded-xl disabled:opacity-50"
+          >
+            <ChevronLeft strokeWidth={2.5} size={18} className="mr-1" />
+            이전
+          </button>
 
-        <button
-          onClick={() => setShowAnswer(!showAnswer)}
-          className="flex-1 h-12 bg-[#B7FF74] text-black font-bold rounded-2xl hover:bg-[#92FF2B] transition-colors"
-        >
-          {showAnswer ? '답안 숨기기' : '모범 답안 확인'}
-        </button>
+          <button
+            onClick={() => setShowAnswer(!showAnswer)}
+            className="flex-1 h-12 bg-[#B7FF74] text-black font-bold rounded-2xl hover:bg-[#92FF2B] transition-colors"
+          >
+            {showAnswer ? '답안 숨기기' : '모범 답안 확인'}
+          </button>
 
-        <button
-          onClick={nextSentence}
-          className="flex items-center px-3 py-2 text-gray-400 bg-transparent hover:bg-gray-100 rounded-xl"
-        >
-          다음
-          <ChevronRight strokeWidth={2.5} size={18} className="ml-1" />
-        </button>
-      </footer>
+          <button
+            onClick={nextSentence}
+            className="flex items-center px-3 py-2 text-gray-400 bg-transparent hover:bg-gray-100 rounded-xl"
+          >
+            다음
+            <ChevronRight strokeWidth={2.5} size={18} className="ml-1" />
+          </button>
+        </footer>
+      </div>
     </div>
   );
 }
