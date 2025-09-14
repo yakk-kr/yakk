@@ -76,7 +76,7 @@ function SetupScreen({
                   📝 텍스트 모드
                 </div>
                 <div className="text-sm font-semibold text-gray-500">
-                  텍스트를 보면서 차근차근 학습할 수 있어요.
+                  텍스트만으로 빠르고 간편하게 학습할 수 있어요.
                 </div>
               </button>
 
