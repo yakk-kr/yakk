@@ -60,7 +60,11 @@ function LearningScreen({
   useEffect(() => {
     if (isVoiceMode && currentSentence) {
       const text = getQuestionText();
-      const language = speakerLanguages?.[currentSentence.speaker] ?? 'kr';
+      const language =
+        speakerLanguages?.[currentSentence.speaker] === 'jp'
+          ? 'ja-JP'
+          : 'ko-KR';
+
       const timer = setTimeout(() => {
         playTTS(text, language);
       }, 500);
@@ -105,7 +109,9 @@ function LearningScreen({
                       ? playTTS(null, null)
                       : playTTS(
                           getQuestionText(),
-                          speakerLanguages?.[currentSentence?.speaker] ?? 'kr'
+                          speakerLanguages?.[currentSentence?.speaker] === 'jp'
+                            ? 'ja-JP'
+                            : 'ko-KR'
                         )
                   }
                   className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60"

@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google-cloud/text-to-speech": "^6.3.0",
     "canvas-confetti": "^1.9.3",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

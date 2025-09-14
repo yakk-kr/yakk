@@ -75,40 +75,43 @@ function InterpreterApp() {
     }
   };
 
-  const playTTS = (text, language) => {
-    if (!('speechSynthesis' in window)) {
-      console.error('Speech synthesis is not supported in this browser.');
+  const playTTS = async (text, language) => {
+    if (!text) {
+      setIsPlaying(false);
       return;
     }
 
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
-      return;
-    }
+    setIsPlaying(true);
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    const langCode = language === 'jp' ? 'ja-JP' : 'ko-KR';
-    utterance.lang = langCode;
-    utterance.rate = 0.8;
+    try {
+      const response = await fetch(
+        'https://us-central1-yakk-kr.cloudfunctions.net/getTTS',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          // body: JSON.stringify({ text, language }), // 기존 코드
+          body: JSON.stringify({ text, lang: language }), // 수정된 코드
+        }
+      );
 
-    const voices = window.speechSynthesis.getVoices();
-    const selectedVoice = voices.find((voice) => voice.lang === langCode);
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
+      if (!response.ok) throw new Error('TTS 요청 실패');
 
-    utterance.onstart = () => {
-      setIsPlaying(true);
-    };
-    utterance.onend = () => {
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+
+      audio.onended = () => {
+        setIsPlaying(false);
+      };
+      audio.onerror = () => {
+        setIsPlaying(false);
+      };
+
+      audio.play();
+    } catch (err) {
+      console.error('TTS 오류:', err);
       setIsPlaying(false);
-    };
-    utterance.onerror = (event) => {
-      console.error('Speech synthesis error:', event);
-      setIsPlaying(false);
-    };
-
-    window.speechSynthesis.speak(utterance);
+    }
   };
 
   const toggleSpeakerLanguage = () => {
