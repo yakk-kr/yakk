@@ -58,7 +58,7 @@ function FeedbackPage({ setCurrentScreen }) {
   return (
     <div className="relative min-h-screen bg-[#F8F8F8] overflow-hidden">
       {/* 상단 연두 그라디언트 배경 */}
-      <div className="absolute top-0 left-0 w-full h-[405px] opacity-30 bg-gradient-to-b from-[#C1FF87] to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-[405px] opacity-30 bg-gradient-to-b from-[#C1FF87] to-transparent pointer-events-none z-0" />
 
       {/* 헤더 */}
       <div className="fixed top-0 z-10 w-full h-[52px] bg-white flex items-center px-2 border-b border-black/5">
