@@ -97,7 +97,7 @@ function HomeScreen({
                     className={`px-3 py-1.5 whitespace-nowrap rounded-full text-[14px] font-semibold transition
           ${
             selectedTab === tab
-              ? 'bg-white shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-black'
+              ? 'bg-white border border-black/10 text-black'
               : 'bg-black/5 text-black/40'
           }`}
                   >

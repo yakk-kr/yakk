@@ -17,9 +17,11 @@ function LearningScreen({
   setCurrentScreen,
   setUploadedScript,
 }) {
-  // 고정 색상 팔레트 및 화자 → 색상 함수
   const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
+
+  // 화자 이름 기반 고정 색상
   function getSpeakerColor(speaker) {
+    if (!speaker) return '#E0E0E0';
     const hash = [...speaker].reduce(
       (acc, char) => acc + char.charCodeAt(0),
       0
@@ -27,19 +29,22 @@ function LearningScreen({
     return speakerColors[hash % speakerColors.length];
   }
 
+  // 질문 텍스트
   const getQuestionText = () => {
     if (!currentSentence) return '';
-    const questionLang = speakerLanguages[currentSentence.speaker];
-    return currentSentence[questionLang];
+    const lang = speakerLanguages?.[currentSentence.speaker] ?? 'kr';
+    return currentSentence?.[lang] || '';
   };
 
+  // 답변 텍스트
   const getAnswerText = () => {
     if (!currentSentence) return '';
-    const answerLang =
-      speakerLanguages[currentSentence.speaker] === 'jp' ? 'kr' : 'jp';
-    return currentSentence[answerLang];
+    const questionLang = speakerLanguages?.[currentSentence.speaker] ?? 'kr';
+    const answerLang = questionLang === 'jp' ? 'kr' : 'jp';
+    return currentSentence?.[answerLang] || '';
   };
 
+  // 다음 문장
   const nextSentence = () => {
     if (currentIndex < currentScript.script.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -49,6 +54,7 @@ function LearningScreen({
     }
   };
 
+  // 이전 문장
   const prevSentence = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
@@ -56,10 +62,11 @@ function LearningScreen({
     }
   };
 
+  // 음성 모드일 때 TTS 실행
   useEffect(() => {
     if (isVoiceMode && currentSentence) {
       const text = getQuestionText();
-      const language = speakerLanguages[currentSentence.speaker];
+      const language = speakerLanguages?.[currentSentence.speaker] ?? 'kr';
       const timer = setTimeout(() => {
         playTTS(text, language);
       }, 500);
@@ -69,7 +76,6 @@ function LearningScreen({
 
   return (
     <div className="min-h-[100dvh] bg-[#F1F8EB] flex flex-col overflow-hidden">
-      {/* Header */}
       <LearningHeader
         currentScript={currentScript}
         currentIndex={currentIndex}
@@ -78,7 +84,7 @@ function LearningScreen({
         isVoiceMode={isVoiceMode}
       />
 
-      {/* Content */}
+      {/* 콘텐츠 */}
       <div className="flex-1 flex flex-col gap-4 px-4 py-4">
         {/* 통역할 문장 */}
         <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
@@ -87,10 +93,10 @@ function LearningScreen({
               <div
                 className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
                 style={{
-                  backgroundColor: getSpeakerColor(currentSentence.speaker),
+                  backgroundColor: getSpeakerColor(currentSentence?.speaker),
                 }}
               >
-                {currentSentence.speaker}
+                {currentSentence?.speaker ?? '?'}
               </div>
               <span className="text-gray-400 text-base font-semibold">
                 통역할 문장
@@ -104,7 +110,7 @@ function LearningScreen({
                     ? playTTS(null, null)
                     : playTTS(
                         getQuestionText(),
-                        speakerLanguages[currentSentence.speaker]
+                        speakerLanguages?.[currentSentence?.speaker] ?? 'kr'
                       )
                 }
                 className="flex items-center px-2 py-2 bg-[#B5FF6F]/30 text-[#59B800] rounded-lg hover:bg-[#B5FF6F]/60"
@@ -140,7 +146,7 @@ function LearningScreen({
         </div>
       </div>
 
-      {/* Footer */}
+      {/* 푸터 */}
       <footer className="bg-white border-t px-4 py-4 flex items-center justify-between gap-3">
         <button
           onClick={prevSentence}
