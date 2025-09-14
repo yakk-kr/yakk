@@ -86,7 +86,7 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
               onClick={copyPrompt}
               className="p-2 rounded-lg bg-transparent hover:bg-black/5"
             >
-              <Copy size={16} className="text-gray-600" />
+              <Copy size={16} strokeWidth={2.5} className="text-gray-400" />
             </button>
           </div>
           <div className="bg-white p-4 h-[312px] overflow-y-auto">

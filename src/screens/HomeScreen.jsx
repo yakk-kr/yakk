@@ -49,7 +49,7 @@ function HomeScreen({
             onClick={() => setCurrentScreen('help')}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5"
           >
-            <HelpCircle size={22} className="text-gray-600" />
+            <HelpCircle size={22} className="text-gray-400" />
           </button>
         </div>
       </header>
@@ -88,22 +88,25 @@ function HomeScreen({
 
           <div className="relative">
             {/* Tabs 영역 */}
-            <div className="overflow-x-auto no-scrollbar pr-[64px]">
-              <div className="flex gap-3">
+            <div className="overflow-x-auto no-scrollbar">
+              <div className="flex gap-3 pr-0">
                 {categoryTabs.map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setSelectedTab(tab)}
                     className={`px-3 py-1.5 whitespace-nowrap rounded-full text-[14px] font-semibold transition
-            ${
-              selectedTab === tab
-                ? 'bg-white shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-black'
-                : 'bg-black/5 text-black/40'
-            }`}
+          ${
+            selectedTab === tab
+              ? 'bg-white shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-black'
+              : 'bg-black/5 text-black/40'
+          }`}
                   >
                     {tab}
                   </button>
                 ))}
+
+                {/* 가짜 마지막 여백 아이템 */}
+                <div className="w-[64px] flex-shrink-0" />
               </div>
             </div>
 

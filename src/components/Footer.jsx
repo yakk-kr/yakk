@@ -22,7 +22,7 @@ function Footer() {
           href="https://github.com/hyynjju"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-black/30 hover:text-black/70 transition"
+          className="text-gray-400 hover:text-gray-500 transition"
         >
           <Github size={20} />
         </a>
@@ -30,7 +30,7 @@ function Footer() {
         {/* Email */}
         <a
           href="mailto:yakk.learning@gmail.com"
-          className="text-black/30 hover:text-black/70 transition"
+          className="text-gray-400 hover:text-gray-500 transition"
         >
           <Mail size={20} />
         </a>
