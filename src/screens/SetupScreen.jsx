@@ -185,9 +185,9 @@ function SetupScreen({
             <div className="flex justify-center">
               <button
                 onClick={toggleSpeakerLanguage}
-                className="flex items-center px-4 py-2 text-[#59B800] hover:bg-black/5 rounded-lg"
+                className="flex items-center px-4 py-2 font-semibold text-[#59B800] hover:bg-black/5 rounded-xl"
               >
-                <RefreshCcw size={16} className="mr-2" />
+                <RefreshCcw size={14} strokeWidth={2.5} className="mr-2" />
                 언어 교체
               </button>
             </div>

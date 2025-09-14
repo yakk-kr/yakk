@@ -1,12 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-  Pause,
-  Play,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
 
 function LearningScreen({
@@ -24,6 +17,16 @@ function LearningScreen({
   setCurrentScreen,
   setUploadedScript,
 }) {
+  // 고정 색상 팔레트 및 화자 → 색상 함수
+  const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
+  function getSpeakerColor(speaker) {
+    const hash = [...speaker].reduce(
+      (acc, char) => acc + char.charCodeAt(0),
+      0
+    );
+    return speakerColors[hash % speakerColors.length];
+  }
+
   const getQuestionText = () => {
     if (!currentSentence) return '';
     const questionLang = speakerLanguages[currentSentence.speaker];
@@ -53,21 +56,13 @@ function LearningScreen({
     }
   };
 
-  // 화자 색상 팔레트
-  const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
-
-  // Add this useEffect hook for automatic playback
   useEffect(() => {
     if (isVoiceMode && currentSentence) {
       const text = getQuestionText();
       const language = speakerLanguages[currentSentence.speaker];
-
-      // Delay playback slightly to ensure the component and data are ready
       const timer = setTimeout(() => {
         playTTS(text, language);
       }, 500);
-
-      // Clean up the timer to prevent memory leaks or unexpected behavior
       return () => clearTimeout(timer);
     }
   }, [currentIndex, isVoiceMode, currentSentence]);
@@ -87,14 +82,12 @@ function LearningScreen({
       <div className="flex-1 flex flex-col gap-4 px-4 py-4">
         {/* 통역할 문장 */}
         <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
-          {/* 헤더: 프로필 + 라벨 + 음성 버튼 */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div
                 className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
                 style={{
-                  backgroundColor:
-                    speakerColors[currentIndex % speakerColors.length],
+                  backgroundColor: getSpeakerColor(currentSentence.speaker),
                 }}
               >
                 {currentSentence.speaker}
@@ -121,7 +114,6 @@ function LearningScreen({
             )}
           </div>
 
-          {/* 텍스트 */}
           <div className="flex-1 flex items-start">
             <p className="text-2xl font-semibold text-gray-900 leading-snug">
               {!isVoiceMode || showTextInVoice
