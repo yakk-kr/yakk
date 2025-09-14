@@ -146,7 +146,7 @@ function HomeScreen({
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer setCurrentScreen={setCurrentScreen} />
     </div>
   );
 }

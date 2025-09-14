@@ -5,7 +5,8 @@ import HomeScreen from './screens/HomeScreen';
 import SetupScreen from './screens/SetupScreen';
 import LearningScreen from './screens/LearningScreen';
 import CompleteScreen from './screens/CompleteScreen';
-import HelpScreen from './screens/HelpScreen'; // ✅ 추가
+import HelpScreen from './screens/HelpScreen';
+import FeedbackPage from './screens/FeedbackPage';
 
 // 화자별 색상 반환 함수
 export const getSpeakerColor = (speaker) => {
@@ -25,7 +26,7 @@ function InterpreterApp() {
   const [currentScreen, setCurrentScreen] = useState('home');
   const [uploadedScript, setUploadedScript] = useState(null);
   const [selectedTab, setSelectedTab] = useState('전체');
-  const [copied, setCopied] = useState(false); // ✅ showHelp 제거
+  const [copied, setCopied] = useState(false);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [showTextInVoice, setShowTextInVoice] = useState(true);
   const [speakerLanguages, setSpeakerLanguages] = useState({
@@ -47,7 +48,6 @@ function InterpreterApp() {
     ? ((currentIndex + 1) / currentScript.script.length) * 100
     : 0;
 
-  // 공용 로직: 파일 업로드, TTS, 언어 토글 등
   const validateScript = (script) =>
     script.topic &&
     Array.isArray(script.script) &&
@@ -76,49 +76,38 @@ function InterpreterApp() {
   };
 
   const playTTS = (text, language) => {
-    // Check if speech synthesis is supported
     if (!('speechSynthesis' in window)) {
       console.error('Speech synthesis is not supported in this browser.');
       return;
     }
 
-    // If already speaking, stop the current speech
     if (window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
       return;
     }
 
     const utterance = new SpeechSynthesisUtterance(text);
-
-    // Set language
     const langCode = language === 'jp' ? 'ja-JP' : 'ko-KR';
     utterance.lang = langCode;
-
-    // Set speech rate
     utterance.rate = 0.8;
 
-    // Find a specific voice for better quality
     const voices = window.speechSynthesis.getVoices();
     const selectedVoice = voices.find((voice) => voice.lang === langCode);
     if (selectedVoice) {
       utterance.voice = selectedVoice;
     }
 
-    // Event handlers to manage isPlaying state
     utterance.onstart = () => {
       setIsPlaying(true);
     };
-
     utterance.onend = () => {
       setIsPlaying(false);
     };
-
     utterance.onerror = (event) => {
       console.error('Speech synthesis error:', event);
       setIsPlaying(false);
     };
 
-    // Start speaking
     window.speechSynthesis.speak(utterance);
   };
 
@@ -131,8 +120,8 @@ function InterpreterApp() {
     setSpeakerLanguages(newSpeakerLanguages);
   };
 
-  // 화면 전환
-  if (currentScreen === 'home')
+  // 화면 전환 렌더링
+  if (currentScreen === 'home') {
     return (
       <HomeScreen
         setCurrentScreen={setCurrentScreen}
@@ -146,8 +135,9 @@ function InterpreterApp() {
         setCopied={setCopied}
       />
     );
+  }
 
-  if (currentScreen === 'setup')
+  if (currentScreen === 'setup') {
     return (
       <SetupScreen
         currentScript={currentScript}
@@ -163,8 +153,9 @@ function InterpreterApp() {
         setShowAnswer={setShowAnswer}
       />
     );
+  }
 
-  if (currentScreen === 'learning')
+  if (currentScreen === 'learning') {
     return (
       <LearningScreen
         currentScript={currentScript}
@@ -184,8 +175,9 @@ function InterpreterApp() {
         setUploadedScript={setUploadedScript}
       />
     );
+  }
 
-  if (currentScreen === 'complete')
+  if (currentScreen === 'complete') {
     return (
       <CompleteScreen
         currentScript={currentScript}
@@ -195,15 +187,20 @@ function InterpreterApp() {
         setUploadedScript={setUploadedScript}
       />
     );
+  }
 
-  if (currentScreen === 'help')
-    // ✅ 새로 추가
+  if (currentScreen === 'help') {
     return (
       <HelpScreen
         setCurrentScreen={setCurrentScreen}
         promptTemplate={promptTemplate}
       />
     );
+  }
+
+  if (currentScreen === 'feedback') {
+    return <FeedbackPage setCurrentScreen={setCurrentScreen} />;
+  }
 
   return null;
 }
