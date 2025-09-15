@@ -11,6 +11,7 @@ function HomeScreen({
   setUploadedScript,
   selectedTab,
   setSelectedTab,
+  onScriptGenerated, // 새로 추가된 prop
 }) {
   // 카테고리 탭 자동 추출
   const categoryTabs = useMemo(() => {
@@ -59,7 +60,11 @@ function HomeScreen({
       <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[960px] mx-auto w-full">
         {/* PromptInput과 파일 업로드 버튼을 묶는 컨테이너 */}
         <div className="flex flex-col items-center gap-2">
-          <PromptInput setCurrentScreen={setCurrentScreen} />
+          {/* onScriptGenerated prop을 PromptInput에 전달 */}
+          <PromptInput
+            setCurrentScreen={setCurrentScreen}
+            onScriptGenerated={onScriptGenerated}
+          />
           <div className="flex justify-center">
             <label
               htmlFor="file-upload"

@@ -35,7 +35,7 @@ function SetupScreen({
       <header className="fixed top-0 left-0 right-0 bg-white/70 backdrop-blur-md border-b border-black/5 z-50">
         <div className="pl-2 pr-2 py-3 flex items-center">
           <button
-            onClick={() => setCurrentScreen('home')}
+            onClick={() => setCurrentScreen({ name: 'home' })}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5 mr-2"
           >
             <ChevronLeft

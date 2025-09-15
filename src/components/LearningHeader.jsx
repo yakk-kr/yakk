@@ -39,7 +39,7 @@ function LearningHeader({
           </button>
           <button
             onClick={() => {
-              setCurrentScreen('home');
+              setCurrentScreen({ name: 'home' });
               setUploadedScript(null);
             }}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5"

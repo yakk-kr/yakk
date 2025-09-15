@@ -64,7 +64,7 @@ function FeedbackPage({ setCurrentScreen }) {
       <div className="fixed top-0 z-10 w-full h-[52px] bg-white flex items-center px-2 border-b border-black/5">
         <div className="flex items-center">
           <button
-            onClick={() => setCurrentScreen('home')}
+            onClick={() => setCurrentScreen({ name: 'home' })}
             className="p-2 rounded-lg bg-transparent hover:bg-black/5 mr-2"
           >
             <ChevronLeft

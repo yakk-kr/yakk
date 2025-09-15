@@ -37,7 +37,7 @@ function CompleteScreen({
       <div className="absolute top-5 right-4 z-20">
         <button
           onClick={() => {
-            setCurrentScreen('home');
+            setCurrentScreen({ name: 'home' });
             setUploadedScript(null);
           }}
           className="p-2 rounded-full bg-black/5 hover:bg-black/10 mr-2"
@@ -125,7 +125,7 @@ function CompleteScreen({
 
           <button
             onClick={() => {
-              setCurrentScreen('home');
+              setCurrentScreen({ name: 'home' });
               setUploadedScript(null);
             }}
             className="h-[52px] rounded-2xl bg-black/5 hover:bg-gray-200 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"

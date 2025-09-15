@@ -7,6 +7,7 @@ import LearningScreen from './screens/LearningScreen';
 import CompleteScreen from './screens/CompleteScreen';
 import HelpScreen from './screens/HelpScreen';
 import FeedbackPage from './screens/FeedbackPage';
+import ScriptResultScreen from './screens/ScriptResultScreen';
 
 // 화자별 색상 반환 함수
 export const getSpeakerColor = (speaker) => {
@@ -23,7 +24,7 @@ export const getSpeakerColor = (speaker) => {
 };
 
 function InterpreterApp() {
-  const [currentScreen, setCurrentScreen] = useState('home');
+  const [currentScreen, setCurrentScreen] = useState({ name: 'home' });
   const [uploadedScript, setUploadedScript] = useState(null);
   const [selectedTab, setSelectedTab] = useState('전체');
   const [copied, setCopied] = useState(false);
@@ -36,6 +37,9 @@ function InterpreterApp() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  // AI 스크립트를 저장할 상태 추가
+  const [aiScript, setAiScript] = useState(null);
+  const [userPrompt, setUserPrompt] = useState('');
 
   const filteredScripts =
     selectedTab === '전체'
@@ -89,8 +93,7 @@ function InterpreterApp() {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          // body: JSON.stringify({ text, language }), // 기존 코드
-          body: JSON.stringify({ text, lang: language }), // 수정된 코드
+          body: JSON.stringify({ text, lang: language }),
         }
       );
 
@@ -114,6 +117,11 @@ function InterpreterApp() {
     }
   };
 
+  // AI 스크립트를 생성한 후 상태를 업데이트하는 함수
+  const onScriptGenerated = (script) => {
+    setAiScript(script);
+  };
+
   const toggleSpeakerLanguage = () => {
     const newSpeakerLanguages = { ...speakerLanguages };
     for (const speaker in newSpeakerLanguages) {
@@ -124,7 +132,7 @@ function InterpreterApp() {
   };
 
   // 화면 전환 렌더링
-  if (currentScreen === 'home') {
+  if (currentScreen.name === 'home') {
     return (
       <HomeScreen
         setCurrentScreen={setCurrentScreen}
@@ -136,6 +144,7 @@ function InterpreterApp() {
         promptTemplate={promptTemplate}
         copied={copied}
         setCopied={setCopied}
+        onScriptGenerated={onScriptGenerated} // PromptInput에 전달할 함수
       />
     );
   }
@@ -203,6 +212,17 @@ function InterpreterApp() {
 
   if (currentScreen === 'feedback') {
     return <FeedbackPage setCurrentScreen={setCurrentScreen} />;
+  }
+
+  if (currentScreen.name === 'scriptResult') {
+    return (
+      <ScriptResultScreen
+        aiScript={aiScript}
+        setCurrentScreen={setCurrentScreen}
+        setUploadedScript={setUploadedScript}
+        userPrompt={currentScreen.prompt}
+      />
+    );
   }
 
   return null;
