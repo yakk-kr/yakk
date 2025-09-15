@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { Upload, HelpCircle, MessageCircleMore } from 'lucide-react';
+import { HelpCircle, Upload } from 'lucide-react';
 import Footer from '../components/Footer';
 import Logo from '../assets/logo.svg';
 import { learningSamples } from '../data.js';
+import PromptInput from '../components/PromptInput.jsx';
 
 function HomeScreen({
   setCurrentScreen,
@@ -56,29 +57,30 @@ function HomeScreen({
 
       {/* Main */}
       <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[960px] mx-auto w-full">
-        {/* 업로드 카드 */}
-        <div className="bg-white rounded-2xl shadow-[0_4px_100px_rgba(142,218,70,0.25)] p-8 flex flex-col items-center justify-center gap-5">
-          <MessageCircleMore size={48} className="text-gray-300" />
-          <p className="text-center text-gray-500 font-semibold text-base leading-relaxed">
-            JSON 파일을 업로드하고 <br /> 학습을 시작해보세요!
-          </p>
-          <label
-            htmlFor="file-upload"
-            className="px-5 py-2 rounded-xl border border-black/10 bg-gradient-to-b from-black/[0.03] via-black/[0.05] to-black/[0.04] flex items-center gap-3 cursor-pointer hover:bg-black/[0.08] transition"
-          >
-            <Upload size={16} className="text-black/50" />
-            <span className="text-sm font-bold text-black/50 leading-6">
-              파일 업로드하기
-            </span>
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            accept=".json"
-            onChange={handleFileUpload}
-            className="hidden"
-          />
+        {/* PromptInput과 파일 업로드 버튼을 묶는 컨테이너 */}
+        <div className="flex flex-col items-center gap-2">
+          <PromptInput setCurrentScreen={setCurrentScreen} />
+          <div className="flex justify-center">
+            <label
+              htmlFor="file-upload"
+              className="px-3 py-2 rounded-[12px] flex items-center gap-2 cursor-pointer transition
+                         bg-transparent hover:bg-black/[0.05]"
+            >
+              <Upload size={16} className="text-gray-400" />
+              <span className="text-sm font-semibold text-black/40">
+                직접 파일 업로드하기
+              </span>
+            </label>
+          </div>
         </div>
+
+        <input
+          id="file-upload"
+          type="file"
+          accept=".json"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
 
         {/* 예시 자료 */}
         <section className="space-y-4">
