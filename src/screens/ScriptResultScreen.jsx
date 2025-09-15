@@ -157,7 +157,7 @@ const ScriptResultScreen = ({
               </>
             ) : (
               <>
-                <Check strokeWidth={2.5} size={16} /> 이대로 학습 시작하기
+                <Check strokeWidth={3.2} size={16} /> 이대로 학습 시작하기
               </>
             )}
           </button>
