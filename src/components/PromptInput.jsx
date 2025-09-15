@@ -1,8 +1,9 @@
+// PromptInput.jsx
+
 import React, { useState } from 'react';
 import { WandSparkles, ChevronRight, ArrowUp } from 'lucide-react';
 import axios from 'axios';
 
-// GPT 프롬프트 생성
 function buildUserPrompt(input) {
   if (
     input.length < 30 ||
@@ -13,7 +14,6 @@ function buildUserPrompt(input) {
   return input;
 }
 
-// GPT 호출 함수
 async function fetchFromGPT(prompt) {
   const response = await axios.post(
     'https://api.openai.com/v1/chat/completions',
@@ -22,9 +22,7 @@ async function fetchFromGPT(prompt) {
       messages: [
         {
           role: 'system',
-          content: `일본어-한국어 통역 연습을 위한 JSON 스크립트 생성
-\`\`\`json
-{
+          content: `일본어-한국어 통역 연습을 위한 JSON 스크립트 생성\n\n\u0060\u0060\u0060json\n{
   "topic": "대화 상황 또는 주제",
   "script": [
     { "speaker": "A", "jp": "일본어 문장", "kr": "한국어 문장" },
@@ -56,18 +54,23 @@ async function fetchFromGPT(prompt) {
 
 function PromptInput({ onScriptGenerated, setCurrentScreen }) {
   const [inputText, setInputText] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleGenerateAndNavigate = async () => {
     onScriptGenerated(null);
-    setCurrentScreen({ name: 'scriptResult', prompt: inputText });
+    setCurrentScreen({
+      name: 'scriptResult',
+      prompt: inputText,
+      level: selectedLevel, // 여기에 selectedLevel 추가
+    });
 
     let gptResponse = '';
     try {
       gptResponse = await fetchFromGPT(inputText);
       const cleanedResponse = gptResponse
         .replace(/```json|```/g, '')
-        .replace(/\u00A0/g, ' ') // ← 문제의 특수문자 제거
+        .replace(/\u00A0/g, ' ')
         .trim();
 
       const parsedOutput = JSON.parse(cleanedResponse);
@@ -80,28 +83,24 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
 
   return (
     <div className="w-full bg-white/30 shadow-[0_4px_100px_rgba(77,161,0,0.25)] rounded-[20px] outline outline-2 outline-[#EFEFEF]">
-      {/* 상단 타이틀 */}
       <div
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full flex justify-between items-center p-5 cursor-pointer"
       >
         <div className="flex items-center gap-2">
           <WandSparkles size={16} className="text-gray-400" />
-          <div className="text-sm font-semibold text-black/70">
+          <div className="text-m font-bold text-black/50">
             연습해보고 싶은 상황이 있나요?
           </div>
         </div>
-        <div className="p-0">
-          <ChevronRight
-            size={22}
-            className={`text-gray-400 transition-transform duration-300 ${
-              isExpanded ? 'rotate-90' : 'rotate-0'
-            }`}
-          />
-        </div>
+        <ChevronRight
+          size={22}
+          className={`text-gray-400 transition-transform duration-300 ${
+            isExpanded ? 'rotate-90' : 'rotate-0'
+          }`}
+        />
       </div>
 
-      {/* 펼쳐지는 영역 */}
       <div
         className={`transition-max-h duration-500 ease-in-out overflow-hidden`}
         style={{ maxHeight: isExpanded ? '400px' : '0' }}
@@ -109,18 +108,24 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
         <div className="flex flex-col gap-4 px-5 pb-5">
           <textarea
             placeholder="예: 전시회에서 기능성 의류를 판매하는 부스에서 해외 바이어에게 상품을 소개하는 상황"
-            className="w-full h-[200px] text-black placeholder:text-black/40 text-sm font-semibold resize-none outline-none bg-transparent"
+            className="w-full h-[200px] text-black placeholder:text-black/40 text-m font-bold resize-none outline-none bg-transparent"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
 
-          {/* 난이도 + 버튼 */}
           <div className="w-full flex justify-between items-center">
             <div className="flex gap-3">
               {['쉬움', '보통', '어려움'].map((level) => (
                 <div
                   key={level}
-                  className="px-4 py-[7px] bg-black/[0.05] rounded-full text-black/40 text-sm font-semibold"
+                  className={`px-4 py-[7px] rounded-full text-sm font-semibold cursor-pointer ${
+                    selectedLevel === level
+                      ? 'bg-[#B4FF6F80] text-[#59B800]'
+                      : 'bg-black/[0.05] text-black/40'
+                  }`}
+                  onClick={() =>
+                    setSelectedLevel((prev) => (prev === level ? null : level))
+                  }
                 >
                   {level}
                 </div>

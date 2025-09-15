@@ -221,6 +221,7 @@ function InterpreterApp() {
         setCurrentScreen={setCurrentScreen}
         setUploadedScript={setUploadedScript}
         userPrompt={currentScreen.prompt}
+        currentScreen={currentScreen}
       />
     );
   }
