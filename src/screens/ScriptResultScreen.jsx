@@ -4,7 +4,9 @@ import { RefreshCcw, Check, ChevronLeft, Pen } from 'lucide-react';
 // 프롬프트 정보 표시 카드 컴포넌트
 const PromptCard = ({ topic, level, setCurrentScreen }) => (
   <div className="w-[300px] p-5 bg-white rounded-[20px] shadow-[0_4px_100px_rgba(77,161,0,0.25)] flex flex-col gap-3 rotate-[2deg]">
-    <div className="text-[16px] font-bold leading-[24px]">{topic}</div>
+    <div className="text-[16px] text-black font-bold leading-[24px]">
+      {topic}
+    </div>
     <div className="flex justify-between items-center">
       <div className="px-[12px] py-[6px] bg-[#B4FF6F80] text-[#59B800] text-[14px] font-bold rounded-full">
         {level}
@@ -44,12 +46,14 @@ const DialogueContent = ({ script }) => (
         <div
           className={`w-9 h-9 ${
             index % 2 === 0 ? 'bg-[#B7FF74]' : 'bg-[#FFCAE8]'
-          } rounded-full flex items-center justify-center text-[18px] font-extrabold`}
+          } rounded-full flex items-center justify-center text-[18px] text-black font-extrabold`}
         >
           {item.speaker}
         </div>
         <div className="flex-1 p-5 bg-white rounded-[16px] border border-black/5 flex flex-col gap-1">
-          <div className="text-[16px] font-bold leading-[21px]">{item.kr}</div>
+          <div className="text-[16px] font-bold leading-[21px] text-black">
+            {item.kr}
+          </div>
           <div className="text-[12px] font-semibold leading-[18px] text-black/40">
             {item.jp}
           </div>
@@ -61,7 +65,7 @@ const DialogueContent = ({ script }) => (
 
 // 헤더 컴포넌트
 const MainHeader = ({ isLoading }) => (
-  <div className="text-[18px] font-bold leading-[27px] mb-8">
+  <div className="text-[18px]  text-black font-bold leading-[27px] mb-8">
     {isLoading ? (
       <>
         상황에 맞는 스크립트를
