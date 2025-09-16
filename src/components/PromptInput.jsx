@@ -1,55 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { WandSparkles, ChevronRight, ArrowUp, X } from 'lucide-react';
-import axios from 'axios';
-
-function buildUserPrompt(input) {
-  if (
-    input.length < 30 ||
-    (!input.includes('상황') && !input.includes('대화'))
-  ) {
-    return `"${input}"라는 키워드를 일본어-한국어 통역 연습용 대화 스크립트로 구성해줘. 주고받는 형식의 대화로 최소 10문장 이상, 실제 면접 또는 회화처럼 자연스럽게 써줘.`;
-  }
-  return input;
-}
-
-async function fetchFromGPT(prompt) {
-  const response = await axios.post(
-    'https://api.openai.com/v1/chat/completions',
-    {
-      model: 'gpt-4o',
-      messages: [
-        {
-          role: 'system',
-          content: `일본어-한국어 통역 연습을 위한 JSON 스크립트 생성\n\n\`\`\`json\n{
-  "topic": "대화 상황 또는 주제",
-  "script": [
-    { "speaker": "A", "jp": "일본어 문장", "kr": "한국어 문장" },
-    { "speaker": "B", "jp": "일본어 문장", "kr": "한국어 문장" }
-  ]
-}
-\`\`\`
-- 반드시 JSON 형식으로만 응답
-- script는 최소 10문장 이상의 주고받는 대화 포함
-- 실제 일본어/한국어 회화처럼 자연스럽고 맥락에 맞게 작성`,
-        },
-        {
-          role: 'user',
-          content: buildUserPrompt(prompt),
-        },
-      ],
-      temperature: 0.7,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-    }
-  );
-
-  return response.data.choices[0].message.content;
-}
+import { fetchFromGPT } from '../utils/gpt';
 
 function PromptInput({ onScriptGenerated, setCurrentScreen }) {
   const [inputText, setInputText] = useState('');
@@ -74,6 +25,7 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
 
     let gptResponse = '';
     try {
+      // 분리된 함수를 호출하여 사용
       gptResponse = await fetchFromGPT(inputText);
       const cleanedResponse = gptResponse
         .replace(/```json|```/g, '')
@@ -166,7 +118,7 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
                       {isSelected && (
                         <X
                           size={16}
-                          strokeWidth={2.5}
+                          strokeWidth={3}
                           className="text-[#59B800]/70 transition-all duration-300 hover:text-[#59B800]"
                         />
                       )}
@@ -186,7 +138,7 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
               >
                 <ArrowUp
                   size={16}
-                  strokeWidth={3}
+                  strokeWidth={2.5}
                   className="text-white transition-colors duration-200"
                 />
               </button>
