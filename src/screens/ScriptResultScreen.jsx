@@ -3,7 +3,13 @@ import { RefreshCcw, Check, ChevronLeft, Pen } from 'lucide-react';
 
 // 프롬프트 정보 표시 카드 컴포넌트
 const PromptCard = ({ topic, level, setCurrentScreen }) => (
-  <div className="w-[300px] p-5 bg-white rounded-[20px] shadow-[0_4px_100px_rgba(77,161,0,0.25)] flex flex-col gap-3 rotate-[2deg]">
+  <div
+    className="w-[300px] p-5 bg-white rounded-[20px] flex flex-col gap-3"
+    style={{
+      animation:
+        'float 5s ease-in-out infinite, shadowPulse 15s ease-in-out infinite',
+    }}
+  >
     <div className="text-[16px] text-black font-bold leading-[24px]">
       {topic}
     </div>
@@ -18,6 +24,28 @@ const PromptCard = ({ topic, level, setCurrentScreen }) => (
         <Pen size={16} strokeWidth={2.5} className="text-gray-400" />
       </button>
     </div>
+
+    <style jsx>{`
+      @keyframes float {
+        0%,
+        100% {
+          transform: rotate(2deg) translateY(-4px);
+        }
+        50% {
+          transform: rotate(2deg) translateY(4px);
+        }
+      }
+
+      @keyframes shadowPulse {
+        0%,
+        100% {
+          box-shadow: 0 4px 100px rgba(77, 161, 0, 0.15);
+        }
+        50% {
+          box-shadow: 0 4px 100px rgba(77, 161, 0, 0.3);
+        }
+      }
+    `}</style>
   </div>
 );
 
