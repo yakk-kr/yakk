@@ -110,7 +110,7 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
                         className={`transition-colors duration-300 ease-in-out ${
                           isSelected
                             ? 'text-[#59B800]'
-                            : 'text-black/40 group-hover:text-black/60'
+                            : 'text-gray-400 group-hover:text-black/60'
                         }`}
                       >
                         {level}

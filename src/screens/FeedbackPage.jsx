@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Send } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { sendFeedback } from '../utils/googleFormSubmit';
+import { FooterButton } from '../components/FooterButton';
 
 function FeedbackPage({ setCurrentScreen }) {
   const [name, setName] = useState('');
@@ -126,23 +127,18 @@ function FeedbackPage({ setCurrentScreen }) {
       </div>
 
       {/* 하단 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 z-20">
-        <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
-        <div className="bg-[#F8F8F8] px-5 pb-6 flex flex-col gap-3 max-w-[640px] mx-auto">
-          <button
-            onClick={handleSubmit}
-            disabled={loading}
-            className={`h-[52px] rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] text-black ${
-              loading
-                ? 'bg-[#B7FF74]/50 cursor-not-allowed'
-                : 'bg-[#B7FF74] hover:bg-[#92FF2B]'
-            }`}
-          >
-            <Send size={16} strokeWidth={2.5} className="text-black" />
-            {loading ? '전송 중...' : '의견 보내기'}
-          </button>
-        </div>
-      </div>
+      <FooterButton
+        singleButtonProps={{
+          onClick: handleSubmit,
+          disabled: loading,
+          isLoading: loading,
+          loadingText: '전송 중...',
+          text: '의견 보내기',
+          icon: 'Send',
+          bgColor: 'bg-[#B7FF74]',
+          textColor: 'text-black',
+        }}
+      />
     </div>
   );
 }

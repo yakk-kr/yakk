@@ -1,5 +1,6 @@
 import React from 'react';
 import { RefreshCcw, Check, ChevronDown, ChevronLeft } from 'lucide-react';
+import { FooterButton } from '../components/FooterButton';
 
 function SetupScreen({
   currentScript,
@@ -200,19 +201,15 @@ function SetupScreen({
       </div>
 
       {/* 하단 버튼 영역 */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#F8F8F8]">
-        <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
-        <div className="px-4 pb-6">
-          <div className="w-full max-w-[960px] mx-auto">
-            <button
-              onClick={startLearning}
-              className="w-full bg-[#B7FF74] text-black py-4 rounded-2xl font-bold hover:bg-[#92FF2B] transition-colors text-lg"
-            >
-              학습 시작하기
-            </button>
-          </div>
-        </div>
-      </div>
+      <FooterButton
+        singleButtonProps={{
+          onClick: startLearning,
+          text: '학습 시작하기',
+          icon: 'Send',
+          bgColor: 'bg-[#B7FF74]',
+          textColor: 'text-black',
+        }}
+      />
     </div>
   );
 }

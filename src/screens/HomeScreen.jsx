@@ -63,7 +63,7 @@ function HomeScreen({
                          bg-transparent hover:bg-black/[0.05]"
             >
               <Upload size={16} className="text-gray-400" />
-              <span className="text-sm font-semibold text-black/40">
+              <span className="text-sm font-semibold text-gray-400">
                 직접 파일 업로드하기
               </span>
             </button>
@@ -143,7 +143,7 @@ function HomeScreen({
                      bg-transparent hover:bg-black/[0.05]"
                 >
                   <HelpCircle size={16} className="text-gray-400" />
-                  <span className="text-sm font-semibold text-black/40">
+                  <span className="text-sm font-semibold text-gray-400">
                     JSON이 뭔가요?
                   </span>
                 </button>
@@ -169,7 +169,7 @@ function HomeScreen({
                       ${
                         selectedTab === tab
                           ? 'bg-white border border-black/10 text-black'
-                          : 'bg-black/5 text-black/40'
+                          : 'bg-black/5 text-gray-400'
                       }`}
                   >
                     {tab}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Copy, Check, Bot } from 'lucide-react';
+import { FooterButton } from '../components/FooterButton';
 
 function HelpScreen({ setCurrentScreen, promptTemplate }) {
   const [copied, setCopied] = useState(false);
@@ -125,19 +126,15 @@ function HelpScreen({ setCurrentScreen, promptTemplate }) {
         </div>
       </div>
 
-      {/* 하단 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 z-20">
-        <div className="h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
-        <div className="bg-[#F8F8F8] px-8 pb-6 flex flex-col gap-3 max-w-[640px] mx-auto">
-          <button
-            onClick={copyPrompt}
-            className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
-          >
-            <Copy size={16} strokeWidth={2.5} className="text-black" />
-            프롬프트 복사하기
-          </button>
-        </div>
-      </div>
+      <FooterButton
+        singleButtonProps={{
+          onClick: copyPrompt,
+          text: '프롬프트 복사하기',
+          icon: 'Copy',
+          bgColor: 'bg-[#B7FF74]',
+          textColor: 'text-black',
+        }}
+      />
 
       {/* 토스트 */}
       <div

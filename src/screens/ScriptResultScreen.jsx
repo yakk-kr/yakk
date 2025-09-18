@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { RefreshCcw, Check, ChevronLeft, Pen } from 'lucide-react';
+import { ChevronLeft, Pen } from 'lucide-react';
+import { FooterButton } from '../components/FooterButton';
 
 // 프롬프트 정보 표시 카드 컴포넌트
 const PromptCard = ({ topic, level, setCurrentScreen }) => (
@@ -82,7 +83,7 @@ const DialogueContent = ({ script }) => (
           <div className="text-[16px] font-bold leading-[21px] text-black">
             {item.kr}
           </div>
-          <div className="text-[12px] font-semibold leading-[18px] text-black/40">
+          <div className="text-[12px] font-semibold leading-[18px] text-gray-400">
             {item.jp}
           </div>
         </div>
@@ -171,30 +172,18 @@ const ScriptResultScreen = ({
       </div>
 
       {/* 하단 고정 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 z-10 px-5 pb-5 bg-[#F8F8F8]">
-        <div className="absolute top-[-20px] left-0 w-full h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
-        <div className="max-w-[960px] mx-auto w-full">
-          <button
-            onClick={handleButtonClick}
-            disabled={isLoading || !isAiScriptValidJson}
-            className={`w-full h-[52px] rounded-2xl font-bold text-[16px] flex items-center justify-center gap-3 transition ${
-              isLoading || !isAiScriptValidJson
-                ? 'bg-black/5 text-black/30 cursor-not-allowed'
-                : 'bg-[#B7FF74] text-black hover:bg-[#92FF2B]'
-            }`}
-          >
-            {isLoading ? (
-              <>
-                <RefreshCcw strokeWidth={2.5} size={16} /> 생성 중...
-              </>
-            ) : (
-              <>
-                <Check strokeWidth={3.2} size={16} /> 이대로 학습 시작하기
-              </>
-            )}
-          </button>
-        </div>
-      </div>
+      <FooterButton
+        singleButtonProps={{
+          onClick: handleButtonClick,
+          disabled: isLoading || !isAiScriptValidJson,
+          isLoading,
+          loadingText: '생성 중...',
+          text: '이대로 학습 시작하기',
+          icon: 'Check',
+          bgColor: 'bg-[#B7FF74]',
+          textColor: 'text-black',
+        }}
+      />
     </div>
   );
 };

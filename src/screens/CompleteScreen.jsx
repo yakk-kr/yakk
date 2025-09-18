@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Check, ChevronRight, Home, X, RefreshCcw } from 'lucide-react';
+import { Check, ChevronRight, X } from 'lucide-react';
 import { learningSamples } from '../data.js';
 import confetti from 'canvas-confetti';
+import { FooterButton } from '../components/FooterButton.jsx';
 
 function CompleteScreen({
   currentScript,
@@ -105,39 +106,24 @@ function CompleteScreen({
         </div>
       </div>
 
-      {/* 하단 버튼 - 전체 너비 컨테이너 */}
-      <div className="fixed bottom-0 left-0 right-0 z-10 px-5 pb-5 bg-[#F8F8F8]">
-        {/* 그라디언트 효과를 위한 상단 레이어 */}
-        <div className="absolute top-[-20px] left-0 w-full h-5 bg-gradient-to-t from-[#F8F8F8] to-transparent pointer-events-none" />
-
-        <div className="max-w-[960px] mx-auto w-full flex flex-col gap-3">
-          <button
-            onClick={() => {
-              setCurrentIndex(0);
-              setShowAnswer(false);
-              setCurrentScreen('learning');
-            }}
-            className="h-[52px] rounded-2xl bg-[#B7FF74] hover:bg-[#92FF2B] flex items-center justify-center gap-3 font-bold text-[16px] text-black"
-          >
-            <RefreshCcw strokeWidth={2.5} size={16} className="text-black" />
-            다시 학습하기
-          </button>
-
-          <button
-            onClick={() => {
-              setCurrentScreen({ name: 'home' });
-              setUploadedScript(null);
-            }}
-            className="h-[52px] rounded-2xl bg-black/5 hover:bg-gray-200 flex items-center justify-center gap-3 font-bold text-[16px] text-black/40"
-          >
-            <Home size={16} strokeWidth={2.5} className="text-gray-400" />
-            메인으로 돌아가기
-          </button>
-        </div>
-      </div>
-
-      {/* 하단 배경 블록을 푸터 컨테이너 바로 아래에 둡니다. */}
-      <div className="w-full h-[20px] bg-[#F8F8F8] fixed bottom-0 left-0 z-0 pointer-events-none" />
+      {/* 하단 버튼 */}
+      <FooterButton
+        doubleButtonProps={{
+          onClick1: () => {
+            setCurrentIndex(0);
+            setShowAnswer(false);
+            setCurrentScreen('learning');
+          },
+          text1: '다시 학습하기',
+          icon1: 'RefreshCcw',
+          onClick2: () => {
+            setCurrentScreen({ name: 'home' });
+            setUploadedScript(null);
+          },
+          text2: '메인으로 돌아가기',
+          icon2: 'Home',
+        }}
+      />
     </div>
   );
 }
