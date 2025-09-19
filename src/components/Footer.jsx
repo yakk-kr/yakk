@@ -25,7 +25,7 @@ function Footer({ setCurrentScreen }) {
       <div className="flex gap-6 items-center">
         {/* GitHub */}
         <a
-          href="https://github.com/hyynjju"
+          href="https://github.com/yakk-kr/yakk"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-400 hover:text-gray-500 transition"
