@@ -1,12 +1,19 @@
-# React + Vite
+# 🗣️ yakk (야크) - 동시통역 학습 앱
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Cover](docs/cover.png)
 
-Currently, two official plugins are available:
+<div align="center">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![Website](https://img.shields.io/badge/Homepage-000000?style=for-the-badge&logo=homeadvisor&logoColor=white)](https://yakk.kr)  
+[![Contact](https://img.shields.io/badge/Contact-Email-green?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yakk.learning@gmail.com)
 
-## Expanding the ESLint configuration
+</div>
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> [!NOTE]
+> 일본어를 공부하면서 통역 상황을 직접 경험해보고 싶었던 적 있지 않나요?  
+> **yakk**는 일본어 학습자 누구나 **한-일 동시통역 상황**을 연습해볼 수 있도록 설계된 웹 기반 학습 서비스입니다.  
+>  
+> *공연장에서 아티스트의 멘트를 통역하거나, 일본인 친구에게 한국을 소개할 때 머리가 꼬였던 경험*  
+> 그런 상황을 직접 재현하며 연습할 수 있어요.  
+>  
+> **AI 기반 자동 생성 스크립트** 또는 **자신만의 스크립트 업로드**로 자유롭게 학습할 수 있습니다✏️
