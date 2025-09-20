@@ -1,4 +1,4 @@
-# 🗣️ yakk (야크) - 동시통역 학습 앱
+# 🗣️ yakk (야크) - 동시통역 학습 서비스
 
 ![Cover](docs/cover.png)
 
