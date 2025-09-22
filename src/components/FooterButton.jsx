@@ -81,7 +81,11 @@ const SingleButton = ({
       >
         {isLoading && !isDone ? (
           <>
-            <RefreshCcw strokeWidth={2.5} size={16} className="animate-spin" />
+            <RefreshCcw
+              strokeWidth={2.5}
+              size={16}
+              className="animate-spin-slow"
+            />
             {loadingText}
           </>
         ) : (

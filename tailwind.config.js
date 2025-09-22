@@ -5,6 +5,7 @@ export default {
     extend: {
       animation: {
         shimmer: 'shimmer 4s infinite linear',
+        'spin-slow': 'spin 3s linear infinite',
       },
       keyframes: {
         shimmer: {
