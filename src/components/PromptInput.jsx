@@ -48,8 +48,10 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
       >
         <div className="flex items-center gap-2">
           <WandSparkles size={16} className="text-gray-400" />
-          <div className="text-m font-bold text-black/50">
-            연습해보고 싶은 상황이 있나요?
+          <div className="text-m font-bold text-black/50 relative overflow-hidden">
+            <span className="inline-block bg-[linear-gradient(90deg,#5a5a5a_10%,#d6d6d6_25%,#5a5a5a_50%)] bg-[length:200%_100%] animate-shimmer text-transparent bg-clip-text">
+              연습해보고 싶은 상황이 있나요?
+            </span>
           </div>
         </div>
         <ChevronRight

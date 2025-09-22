@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RefreshCcw, Check, Home, Upload, Send } from 'lucide-react';
 
 // 아이콘 매핑
@@ -22,27 +22,84 @@ const SingleButton = ({
   textColor,
 }) => {
   const Icon = iconMap[icon];
+  const [progress, setProgress] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+  const [isDone, setIsDone] = useState(false);
+
+  useEffect(() => {
+    let frameId;
+    let completeTimer;
+    let timers = [];
+
+    if (isLoading) {
+      // 초기화
+      setProgress(0);
+      setIsDone(false);
+      const start = Date.now();
+      setStartTime(start);
+
+      timers = [
+        setTimeout(() => setProgress(50), 2000),
+        setTimeout(() => setProgress(70), 5000),
+        setTimeout(() => setProgress(90), 7000),
+      ];
+    } else if (startTime) {
+      // 로딩 끝났을 때
+      const elapsed = Date.now() - startTime;
+      let delay = 0;
+      if (elapsed < 1000) delay = 500;
+      else if (elapsed < 2000) delay = 400;
+      else delay = 300;
+
+      // 자연스러운 70~100 애니메이션 유도
+      frameId = requestAnimationFrame(() => {
+        setProgress(100);
+      });
+
+      completeTimer = setTimeout(() => {
+        setIsDone(true);
+      }, delay);
+    }
+
+    return () => {
+      timers.forEach(clearTimeout);
+      cancelAnimationFrame(frameId);
+      clearTimeout(completeTimer);
+    };
+  }, [isLoading]);
 
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`w-full h-[52px] rounded-2xl font-bold text-[16px] flex items-center justify-center gap-3 transition ${
-        disabled
-          ? 'bg-black/5 text-gray-400 cursor-not-allowed'
-          : `${bgColor} ${textColor} hover:bg-[#92FF2B]`
-      }`}
-    >
-      {isLoading ? (
-        <>
-          <RefreshCcw strokeWidth={2.5} size={16} /> {loadingText}
-        </>
-      ) : (
-        <>
-          {Icon && <Icon strokeWidth={2.5} size={16} />} {text}
-        </>
+    <div className="relative w-full">
+      <button
+        onClick={onClick}
+        disabled={disabled || !isDone}
+        className={`w-full h-[52px] rounded-2xl font-bold text-[16px] flex items-center justify-center gap-3 transition overflow-hidden relative z-10 ${
+          disabled || !isDone
+            ? 'bg-black/5 text-gray-400 cursor-not-allowed'
+            : `${bgColor} ${textColor} hover:bg-[#92FF2B]`
+        }`}
+      >
+        {isLoading && !isDone ? (
+          <>
+            <RefreshCcw strokeWidth={2.5} size={16} className="animate-spin" />
+            {loadingText}
+          </>
+        ) : (
+          <>
+            {Icon && <Icon strokeWidth={2.5} size={16} />}
+            {text}
+          </>
+        )}
+      </button>
+
+      {/* 프로그레스 바 */}
+      {(isLoading || !isDone) && (
+        <div
+          className="absolute left-0 top-0 h-full bg-[#B7FF74] transition-all duration-700 z-0 rounded-2xl"
+          style={{ width: `${progress}%` }}
+        />
       )}
-    </button>
+    </div>
   );
 };
 
