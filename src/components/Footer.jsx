@@ -15,12 +15,12 @@ function Footer({ setCurrentScreen }) {
           한국어-일본어 통역 학습 서비스 <b>야크</b>
         </p>
         <a
-          href="mailto:support@yakk.kr"
+          href="mailto:contact@yakk.kr"
           className="flex items-center gap-2 mt-1"
         >
           <p className="text-xs text-black/30">이메일</p>
           <div className="w-[1px] h-2 bg-black/30" />
-          <p className="text-xs text-black/30">support@yakk.kr</p>
+          <p className="text-xs text-black/30">contact@yakk.kr</p>
         </a>
         <button
           onClick={() => setCurrentScreen('feedback')}
@@ -43,7 +43,7 @@ function Footer({ setCurrentScreen }) {
 
         {/* Email */}
         <a
-          href="mailto:support@yakk.kr"
+          href="mailto:contact@yakk.kr"
           className="text-gray-400 hover:text-gray-500 transition"
         >
           <Mail size={20} />
