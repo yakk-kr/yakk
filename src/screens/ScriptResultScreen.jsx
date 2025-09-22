@@ -55,12 +55,12 @@ const SkeletonDialogue = () => (
   <div className="flex flex-col gap-4 animate-pulse">
     {[...Array(3)].map((_, idx) => (
       <div key={idx} className="flex items-start gap-2">
-        <div className="w-9 h-9 bg-black/5 rounded-full" />
+        <div className="w-9 h-9 bg-black/10 rounded-full" />
         <div className="flex-1 p-5 bg-white rounded-[16px] border border-black/5 flex flex-col gap-2">
-          <div className="h-3 w-3/4 bg-black/10 rounded" />
-          <div className="h-3 w-1/2 bg-black/10 rounded" />
-          <div className="h-3 w-full bg-black/10 rounded" />
-          <div className="h-3 w-1/2 bg-black/10 rounded" />
+          <div className="h-3 w-3/4 bg-black/15 rounded" />
+          <div className="h-3 w-1/2 bg-black/15 rounded" />
+          <div className="h-3 w-full bg-black/15 rounded" />
+          <div className="h-3 w-1/2 bg-black/15 rounded" />
         </div>
       </div>
     ))}
