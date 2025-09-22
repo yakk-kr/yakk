@@ -2,7 +2,18 @@
 export default {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        shimmer: 'shimmer 4s infinite linear',
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { backgroundPosition: '-200px 0' },
+          '70%': { backgroundPosition: '-200px 0' },
+          '100%': { backgroundPosition: '200px 0' },
+        },
+      },
+    },
   },
   plugins: [require('tailwind-scrollbar-hide')],
 };
