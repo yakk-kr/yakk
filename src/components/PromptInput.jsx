@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { WandSparkles, ChevronRight, ArrowUp, X } from 'lucide-react';
+import { WandSparkles, ChevronRight, ArrowUp } from 'lucide-react';
 import { fetchFromGPT } from '../utils/gpt';
+import SelectableButton from './SelectableButton';
 
 function PromptInput({ onScriptGenerated, setCurrentScreen }) {
   const [inputText, setInputText] = useState('');
@@ -86,45 +87,25 @@ function PromptInput({ onScriptGenerated, setCurrentScreen }) {
                 return (
                   <div
                     key={level}
-                    className={`py-[7px] rounded-full text-sm font-semibold cursor-pointer group
-    transition-all duration-300 ease-in-out
-    ${
-      isSelected
-        ? 'bg-[#B4FF6F80] pl-4 pr-3'
-        : 'bg-black/[0.05] hover:bg-black/[0.1]'
-    }
-    ${
-      selectedLevel
-        ? isSelected
-          ? 'px-4'
-          : 'px-0 opacity-0 scale-75 w-0 p-0 m-0 overflow-hidden'
-        : 'px-4'
-    }
-    active:scale-95`}
-                    onClick={() =>
-                      isSelected
-                        ? handleLevelDeselect()
-                        : handleLevelSelect(level)
-                    }
+                    className={`transition-all duration-300 ease-in-out ${
+                      selectedLevel
+                        ? isSelected
+                          ? ''
+                          : 'opacity-0 scale-75 w-0 p-0 m-0 overflow-hidden'
+                        : ''
+                    }`}
                   >
-                    <div className="flex items-center gap-1 whitespace-nowrap">
-                      <span
-                        className={`transition-colors duration-300 ease-in-out ${
-                          isSelected
-                            ? 'text-[#59B800]'
-                            : 'text-gray-400 group-hover:text-black/60'
-                        }`}
-                      >
-                        {level}
-                      </span>
-                      {isSelected && (
-                        <X
-                          size={16}
-                          strokeWidth={3}
-                          className="text-[#59B800]/70 transition-all duration-300 hover:text-[#59B800]"
-                        />
-                      )}
-                    </div>
+                    <SelectableButton
+                      label={level}
+                      isSelected={isSelected}
+                      onClick={() =>
+                        isSelected
+                          ? handleLevelDeselect()
+                          : handleLevelSelect(level)
+                      }
+                      showCloseIcon={true}
+                      variant="level"
+                    />
                   </div>
                 );
               })}

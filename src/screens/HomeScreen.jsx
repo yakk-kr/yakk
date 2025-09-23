@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Logo from '../assets/logo.svg';
 import { learningSamples } from '../data.js';
 import PromptInput from '../components/PromptInput.jsx';
+import SelectableButton from '../components/SelectableButton.jsx';
 
 function HomeScreen({
   setCurrentScreen,
@@ -52,7 +53,7 @@ function HomeScreen({
       {/* Main */}
       <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[960px] mx-auto w-full">
         <div className="flex flex-col items-center gap-2">
-          <div className="w-full transition-transform duration-150 ease-out active:[transform:scale(0.98)]">
+          <div className="w-full transition-transform duration-150 ease-out active:scale-97">
             <PromptInput
               setCurrentScreen={setCurrentScreen}
               onScriptGenerated={onScriptGenerated}
@@ -164,18 +165,13 @@ function HomeScreen({
             <div className="overflow-x-auto no-scrollbar">
               <div className="flex gap-3 pr-0">
                 {categoryTabs.map((tab) => (
-                  <button
+                  <SelectableButton
                     key={tab}
+                    label={tab}
+                    isSelected={selectedTab === tab}
                     onClick={() => setSelectedTab(tab)}
-                    className={`px-3 py-1.5 whitespace-nowrap rounded-full text-[14px] font-semibold transition
-                      ${
-                        selectedTab === tab
-                          ? 'bg-white border border-black/10 text-black'
-                          : 'bg-black/5 text-gray-400'
-                      }`}
-                  >
-                    {tab}
-                  </button>
+                    variant="default"
+                  />
                 ))}
                 <div className="w-[64px] flex-shrink-0" />
               </div>
