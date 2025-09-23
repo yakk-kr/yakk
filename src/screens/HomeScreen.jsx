@@ -52,10 +52,12 @@ function HomeScreen({
       {/* Main */}
       <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[960px] mx-auto w-full">
         <div className="flex flex-col items-center gap-2">
-          <PromptInput
-            setCurrentScreen={setCurrentScreen}
-            onScriptGenerated={onScriptGenerated}
-          />
+          <div className="w-full transition-transform duration-150 ease-out active:[transform:scale(0.98)]">
+            <PromptInput
+              setCurrentScreen={setCurrentScreen}
+              onScriptGenerated={onScriptGenerated}
+            />
+          </div>
           <div className="flex justify-center">
             <button
               onClick={() => setShowUploadModal(true)}
