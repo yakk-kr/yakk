@@ -1,6 +1,7 @@
 import React from 'react';
 import { RefreshCcw, Check, ChevronDown, ChevronLeft } from 'lucide-react';
 import { FooterButton } from '../components/FooterButton';
+import SpeakerAvatar from '../components/SpeakerAvatar';
 
 function SetupScreen({
   currentScript,
@@ -20,6 +21,11 @@ function SetupScreen({
   ];
 
   const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
+
+  const speakerColorMap = speakers.reduce((map, speaker, index) => {
+    map[speaker] = speakerColors[index % speakerColors.length];
+    return map;
+  }, {});
 
   const startLearning = () => {
     setCurrentIndex(0);
@@ -152,16 +158,12 @@ function SetupScreen({
                   className="flex items-center justify-between px-4 py-3 bg-white border border-black/5 rounded-[20px]"
                 >
                   <div className="flex items-center">
-                    <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-black mr-4"
-                      style={{
-                        backgroundColor:
-                          speakerColors[index % speakerColors.length],
-                      }}
-                    >
-                      {speaker}
-                    </div>
-                    <span className="font-bold text-gray-800">
+                    <SpeakerAvatar
+                      speaker={speaker}
+                      color={speakerColorMap[speaker]}
+                      size="normal"
+                    />
+                    <span className="font-bold text-gray-800 ml-4">
                       화자 {speaker}
                     </span>
                   </div>
