@@ -53,7 +53,7 @@ function HomeScreen({
       {/* Main */}
       <main className="flex-1 px-5 pt-24 pb-16 space-y-16 max-w-[960px] mx-auto w-full">
         <div className="flex flex-col items-center gap-2">
-          <div className="w-full transition-transform duration-150 ease-out active:scale-97">
+          <div className="w-full transition-transform duration-150 ease-out active:[transform:scale(0.99)]">
             <PromptInput
               setCurrentScreen={setCurrentScreen}
               onScriptGenerated={onScriptGenerated}
