@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+// LearningScreen.js
+import React, { useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
+import SpeakerAvatar from '../components/SpeakerAvatar';
 
 function LearningScreen({
   currentScript,
@@ -17,16 +19,9 @@ function LearningScreen({
   setCurrentScreen,
   setUploadedScript,
 }) {
-  const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
-
-  function getSpeakerColor(speaker) {
-    if (!speaker) return '#E0E0E0';
-    const hash = [...speaker].reduce(
-      (acc, char) => acc + char.charCodeAt(0),
-      0
-    );
-    return speakerColors[hash % speakerColors.length];
-  }
+  const speakers = [
+    ...new Set(currentScript.script.map((item) => item.speaker)),
+  ];
 
   const getQuestionText = () => {
     if (!currentSentence) return '';
@@ -82,21 +77,17 @@ function LearningScreen({
         isVoiceMode={isVoiceMode}
       />
 
-      {/* 메인 콘텐츠 컨테이너: 최대 너비 960px, 중앙 정렬 */}
       <div className="flex-1 flex flex-col items-center">
         <div className="flex-1 flex flex-col gap-4 px-4 py-4 w-full max-w-[960px]">
           {/* 통역할 문장 */}
           <div className="flex-1 bg-white rounded-xl border border-black/5 p-6 flex flex-col gap-3">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-black"
-                  style={{
-                    backgroundColor: getSpeakerColor(currentSentence?.speaker),
-                  }}
-                >
-                  {currentSentence?.speaker ?? '?'}
-                </div>
+                <SpeakerAvatar
+                  speaker={currentSentence?.speaker ?? '?'}
+                  size="small"
+                  allSpeakers={speakers}
+                />
                 <span className="text-gray-400 text-base font-semibold">
                   통역할 문장
                 </span>

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChevronLeft, Pen } from 'lucide-react';
 import { FooterButton } from '../components/FooterButton';
+import SpeakerAvatar from '../components/SpeakerAvatar';
 
 // 프롬프트 정보 표시 카드 컴포넌트
 const PromptCard = ({ topic, level, setCurrentScreen }) => (
@@ -68,29 +69,31 @@ const SkeletonDialogue = () => (
 );
 
 // 대화 렌더링
-const DialogueContent = ({ script }) => (
-  <div className="flex flex-col gap-4">
-    {script.map((item, index) => (
-      <div key={index} className="flex items-start gap-2">
-        <div
-          className={`w-9 h-9 ${
-            index % 2 === 0 ? 'bg-[#B7FF74]' : 'bg-[#FFCAE8]'
-          } rounded-full flex items-center justify-center text-[18px] text-black font-extrabold`}
-        >
-          {item.speaker}
-        </div>
-        <div className="flex-1 p-5 bg-white rounded-[16px] border border-black/5 flex flex-col gap-1">
-          <div className="text-[16px] font-bold leading-[21px] text-black">
-            {item.kr}
+const DialogueContent = ({ script }) => {
+  const speakers = [...new Set(script.map((item) => item.speaker))];
+
+  return (
+    <div className="flex flex-col gap-4">
+      {script.map((item, index) => (
+        <div key={index} className="flex items-start gap-2">
+          <SpeakerAvatar
+            speaker={item.speaker}
+            size="small"
+            allSpeakers={speakers}
+          />
+          <div className="flex-1 p-5 bg-white rounded-[16px] border border-black/5 flex flex-col gap-1">
+            <div className="text-[16px] font-bold leading-[21px] text-black">
+              {item.kr}
+            </div>
+            <div className="text-[12px] font-semibold leading-[18px] text-gray-400">
+              {item.jp}
+            </div>
           </div>
-          <div className="text-[12px] font-semibold leading-[18px] text-gray-400">
-            {item.jp}
-          </div>
         </div>
-      </div>
-    ))}
-  </div>
-);
+      ))}
+    </div>
+  );
+};
 
 // 헤더 컴포넌트
 const MainHeader = ({ isLoading }) => (

@@ -4,7 +4,7 @@ import Logo from '../assets/logo.svg';
 
 function Footer({ setCurrentScreen }) {
   return (
-    <footer className="w-full bg-black/5 px-8 pt-6 pb-16 flex justify-between items-center">
+    <footer className="w-full bg-black/5 px-8 pt-6 pb-16 flex justify-between items-start">
       <div className="flex flex-col">
         <img
           src={Logo}
