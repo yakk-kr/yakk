@@ -24,7 +24,7 @@ const SingleButton = ({
   const Icon = iconMap[icon];
   const [progress, setProgress] = useState(0);
   const [startTime, setStartTime] = useState(null);
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(true);
 
   useEffect(() => {
     let frameId;
