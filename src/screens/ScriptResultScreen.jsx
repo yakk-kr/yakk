@@ -70,14 +70,7 @@ const SkeletonDialogue = () => (
 
 // 대화 렌더링
 const DialogueContent = ({ script }) => {
-  const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
-
-  const speakerColorMap = [
-    ...new Set(script.map((item) => item.speaker)),
-  ].reduce((map, speaker, index) => {
-    map[speaker] = speakerColors[index % speakerColors.length];
-    return map;
-  }, {});
+  const speakers = [...new Set(script.map((item) => item.speaker))];
 
   return (
     <div className="flex flex-col gap-4">
@@ -85,8 +78,8 @@ const DialogueContent = ({ script }) => {
         <div key={index} className="flex items-start gap-2">
           <SpeakerAvatar
             speaker={item.speaker}
-            color={speakerColorMap[item.speaker]}
             size="small"
+            allSpeakers={speakers}
           />
           <div className="flex-1 p-5 bg-white rounded-[16px] border border-black/5 flex flex-col gap-1">
             <div className="text-[16px] font-bold leading-[21px] text-black">

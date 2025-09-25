@@ -19,22 +19,9 @@ function LearningScreen({
   setCurrentScreen,
   setUploadedScript,
 }) {
-  const speakerColors = ['#B7FF74', '#FFCAE8', '#BFDEFF', '#FFC9A0'];
-
-  const speakerColorMap = useMemo(() => {
-    const map = {};
-    let colorIndex = 0;
-
-    currentScript?.script?.forEach((sentence) => {
-      const spk = sentence.speaker;
-      if (spk && !map[spk]) {
-        map[spk] = speakerColors[colorIndex % speakerColors.length];
-        colorIndex++;
-      }
-    });
-
-    return map;
-  }, [currentScript]);
+  const speakers = [
+    ...new Set(currentScript.script.map((item) => item.speaker)),
+  ];
 
   const getQuestionText = () => {
     if (!currentSentence) return '';
@@ -99,9 +86,7 @@ function LearningScreen({
                 <SpeakerAvatar
                   speaker={currentSentence?.speaker ?? '?'}
                   size="small"
-                  color={
-                    speakerColorMap[currentSentence?.speaker ?? ''] ?? '#E0E0E0'
-                  }
+                  allSpeakers={speakers}
                 />
                 <span className="text-gray-400 text-base font-semibold">
                   통역할 문장
