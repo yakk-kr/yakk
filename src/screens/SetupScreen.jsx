@@ -156,7 +156,7 @@ function SetupScreen({
                   <div className="flex items-center">
                     <SpeakerAvatar
                       speaker={speaker}
-                      size="small"
+                      size="normal"
                       allSpeakers={speakers}
                     />
                     <span className="font-bold text-gray-800 ml-4">
