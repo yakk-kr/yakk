@@ -15,7 +15,7 @@ const PromptCard = ({ topic, level, setCurrentScreen }) => (
       {topic}
     </div>
     <div className="flex justify-between items-center">
-      <div className="px-[12px] py-[6px] bg-[#B4FF6F80] text-[#59B800] text-[14px] font-bold rounded-full">
+      <div className="px-[14px] py-[6px] bg-[#B4FF6F80] text-[#59B800] text-[14px] font-bold rounded-full">
         {level}
       </div>
       <button
