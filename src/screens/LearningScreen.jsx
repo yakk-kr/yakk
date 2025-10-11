@@ -142,7 +142,7 @@ function LearningScreen({
       </div>
 
       {/* 푸터 */}
-      <div className="bg-white border-t px-4 py-4 w-full flex justify-center">
+      <div className="bg-white border-t px-4 py-3 w-full flex justify-center">
         <footer className="flex items-center justify-between gap-3 w-full max-w-[960px]">
           <button
             onClick={prevSentence}
@@ -155,7 +155,7 @@ function LearningScreen({
 
           <button
             onClick={() => setShowAnswer(!showAnswer)}
-            className="flex-1 h-12 bg-[#B7FF74] text-black font-bold rounded-2xl hover:bg-[#92FF2B] transition-colors"
+            className="flex-1 h-[52px] bg-[#B7FF74] text-black font-bold rounded-2xl hover:bg-[#92FF2B] transition-colors"
           >
             {showAnswer ? '답안 숨기기' : '모범 답안 확인'}
           </button>
