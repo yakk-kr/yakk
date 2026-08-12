@@ -20,7 +20,7 @@ export async function fetchFromGPT(prompt) {
   const response = await axios.post(
     'https://api.openai.com/v1/chat/completions',
     {
-      model: 'gpt-4o',
+      model: 'gpt-4.1-nano',
       messages: [
         {
           role: 'system',

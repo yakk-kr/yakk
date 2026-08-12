@@ -82,7 +82,7 @@ function SetupScreen({
                 >
                   📝 텍스트 모드
                 </div>
-                <div className="text-sm font-semibold text-gray-500">
+                <div className="text-sm font-semibold text-gray-500 text-left">
                   텍스트만으로 빠르게 학습해요.
                 </div>
               </button>
@@ -103,7 +103,7 @@ function SetupScreen({
                 >
                   🎧 음성 모드
                 </div>
-                <div className="text-sm font-semibold text-gray-500">
+                <div className="text-sm font-semibold text-gray-500 text-left">
                   TTS를 통해 실제 대화처럼 통역 연습이 가능해요.
                 </div>
               </button>
